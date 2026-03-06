@@ -430,13 +430,9 @@
             gap: clamp(16px, 2vw, 32px);
             flex-wrap: wrap;
         }
-        .experience-logos .experience-photo {
-            height: clamp(80px, 10vw, 140px);
-            border-radius: 8px;
-        }
         .experience-logos img {
-            width: clamp(120px, 15vw, 200px);
-            height: auto;
+            height: clamp(40px, 5vw, 70px);
+            width: auto;
             object-fit: contain;
         }
         .experience-logos .brand-text {
@@ -454,6 +450,14 @@
             color: rgba(21, 94, 232, 0.5);
             margin: 0;
             line-height: 1.4;
+        }
+
+        .about-backed {
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            color: rgba(21, 94, 232, 0.5);
+            margin: clamp(24px, 2.5vw, 40px) 0 0 0;
+            line-height: 1.4;
+            font-style: italic;
         }
 
         /* Footer — white scales down to card, revealing WebGL lake */
@@ -721,7 +725,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-photo" style="background-color: #c8d8e8;"></div>
+                    <div class="card-photo" style="background-image: url('deel.jpg');"></div>
                 </div>
                 <div class="portfolio-card">
                     <div class="card-content">
@@ -801,6 +805,7 @@
                     <span class="spec-value">Sector Agnostic</span>
                 </li>
             </ul>
+            <p class="about-backed">Backed by Accell, Taplow Blue Capital, Fund A, Fund B</p>
         </div>
         <div class="about-divider"></div>
         <div class="about-col">
@@ -809,12 +814,6 @@
             <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
             <p class="about-text">Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.</p>
             <div class="experience-grid">
-                <div class="experience-item">
-                    <p class="experience-label">Early Investor</p>
-                    <div class="experience-logos">
-                        <img src="deel.jpg" alt="Deel" class="experience-photo">
-                    </div>
-                </div>
                 <div class="experience-item">
                     <p class="experience-label">KPI Driven Management of Dozens of Country P&amp;L's</p>
                     <div class="experience-logos">
