@@ -768,7 +768,7 @@
             </svg>
                 </div>
             </div>
-            <img src="ewoks.png" alt="" class="footer-boat">
+            <img src="ewoks.png" alt="" class="footer-boat" loading="lazy">
         </div>
     </div>
 
@@ -806,7 +806,7 @@
             float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
             return mix(a, b, f.x) + (c - a)* f.y * (1.0 - f.x) + (d - b) * f.x * f.y;
         }
-        #define OCTAVES 6
+        #define OCTAVES 4
         float fbm(in vec2 st) {
             float value = 0.0; float amplitude = .5;
             mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
@@ -991,11 +991,24 @@
         let targetFooterScale = 1;
         let targetFooterRadius = 0;
 
+        // --- Cached layout values (recalc on resize only) ---
+        let cachedFooterCardW = footerCard.offsetWidth;
+        let cachedFooterCardH = footerCard.offsetHeight;
+        let cachedTestimonialsHeight = 0;
+        let cachedTrackWidth = 0;
+        let cachedContentHeight = 0;
+
+        function cacheLayoutValues() {
+            cachedFooterCardW = footerCard.offsetWidth;
+            cachedFooterCardH = footerCard.offsetHeight;
+            cachedTestimonialsHeight = testimonialsSpacer.offsetHeight;
+            cachedTrackWidth = testimonialsTrack.scrollWidth;
+            cachedContentHeight = contentSpacer.offsetHeight;
+        }
+
         function getFooterFullScale() {
-            const cardW = footerCard.offsetWidth;
-            const cardH = footerCard.offsetHeight;
-            const sX = window.innerWidth / cardW;
-            const sY = window.innerHeight / cardH;
+            const sX = window.innerWidth / cachedFooterCardW;
+            const sY = window.innerHeight / cachedFooterCardH;
             return Math.max(sX, sY);
         }
 
@@ -1005,37 +1018,46 @@
         targetFooterScale = initScale;
         footerCard.style.transform = `scale(${initScale})`;
 
+        // Visibility flags (set in updateTargets, read in tick — no layout thrashing)
+        let heroInView = true;
+        let footerInView = false;
+
+        // --- Line-by-line reveal (merged into updateTargets) ---
+        const contentSpacer = document.querySelector('.content-spacer');
+        const revealLines = document.querySelectorAll('.reveal-line');
+        const totalLines = revealLines.length;
+
         function updateTargets() {
             const scrollY = window.scrollY;
             const vh = window.innerHeight;
+            const vw = window.innerWidth;
 
             // Frame: scale from 1.0 → slightly smaller card
-            const frameZone = vh * 1.0;
+            const frameZone = vh;
             const progress = Math.min(1, scrollY / frameZone);
-            const maxInset = window.innerWidth <= 768 ? 20 : 80;
-            const scaleX = 1 - (maxInset * 2) / window.innerWidth;
+            const maxInset = vw <= 768 ? 20 : 80;
+            const scaleX = 1 - (maxInset * 2) / vw;
             const scaleY = 1 - (maxInset * 2) / vh;
             const minScale = Math.min(scaleX, scaleY);
             targetScale = 1 - progress * (1 - minScale);
-            targetRadius = progress * (22 / minScale); // compensate for scale
+            targetRadius = progress * (22 / minScale);
 
             // Title: slides from center to bottom of card
-            const titleStartY = vh * 0.42; // roughly centered
-            const titleEndY = Math.max(30, Math.min(vh * 0.04, 60)); // near bottom
+            const titleStartY = vh * 0.42;
+            const titleEndY = Math.max(30, Math.min(vh * 0.04, 60));
             targetTitleY = titleStartY - progress * (titleStartY - titleEndY);
 
             // Shader intensity over 0 → 200vh
-            const totalHeroScroll = vh * 2.0;
-            targetShaderIntensity = Math.min(1, scrollY / totalHeroScroll);
+            targetShaderIntensity = Math.min(1, scrollY / (vh * 2.0));
 
-            // Testimonials
+            // Testimonials (using cached layout values)
             const spacerRect = testimonialsSpacer.getBoundingClientRect();
             const scrollIntoSpacer = -spacerRect.top;
-            const totalScroll = testimonialsSpacer.offsetHeight - vh;
+            const totalScroll = cachedTestimonialsHeight - vh;
             const tProgress = Math.max(0, Math.min(1, scrollIntoSpacer / totalScroll));
 
             // Background: starts 1vh before spacer enters viewport
-            const earlyStart = vh * 1.0;
+            const earlyStart = vh;
             const bgProgress = Math.min(1, Math.max(0, (scrollIntoSpacer + earlyStart) / (earlyStart + totalScroll * 0.15)));
             targetBgR = Math.round(255 + (21 - 255) * bgProgress);
             targetBgG = Math.round(255 + (94 - 255) * bgProgress);
@@ -1043,19 +1065,35 @@
 
             // Horizontal scroll after background is blue
             const scrollProgress = Math.max(0, (tProgress - 0.2) / 0.8);
-            const trackWidth = testimonialsTrack.scrollWidth;
-            const viewWidth = window.innerWidth;
-            const maxTranslate = trackWidth - viewWidth + 120;
+            const maxTranslate = cachedTrackWidth - vw + 120;
             targetTrackX = -scrollProgress * maxTranslate;
 
             // Footer — white scales down from full-screen to card
             const footerRect = footerSpacer.getBoundingClientRect();
             const footerScrollInto = -footerRect.top;
-            const footerFrameZone = vh * 1.0;
-            const footerProgress = Math.max(0, Math.min(1, footerScrollInto / footerFrameZone));
+            const footerProgress = Math.max(0, Math.min(1, footerScrollInto / vh));
             const fullScale = getFooterFullScale();
             targetFooterScale = fullScale - footerProgress * (fullScale - 1);
             targetFooterRadius = footerProgress * 22;
+
+            // Visibility flags for tick() — avoids getBoundingClientRect in rAF
+            heroInView = scrollY < vh * 3.5;
+            footerInView = footerRect.top < vh && footerRect.bottom > 0;
+
+            // Line-by-line reveal (merged — no extra getBoundingClientRect)
+            const contentRect = contentSpacer.getBoundingClientRect();
+            const revealScroll = -contentRect.top;
+            const revealTotal = cachedContentHeight - vh;
+            const revealProgress = Math.max(0, Math.min(1, revealScroll / revealTotal));
+            const startAt = 0.2, endAt = 0.7;
+            for (let i = 0; i < totalLines; i++) {
+                const lineStart = startAt + (endAt - startAt) * (i / totalLines);
+                if (revealProgress >= lineStart) {
+                    revealLines[i].classList.add('visible');
+                } else {
+                    revealLines[i].classList.remove('visible');
+                }
+            }
         }
 
         // Lenis smooth scroll
@@ -1067,36 +1105,8 @@
         });
         lenis.on('scroll', updateTargets);
 
+        cacheLayoutValues();
         updateTargets();
-
-        // --- Line-by-line reveal tied to scroll within content spacer ---
-        const contentSpacer = document.querySelector('.content-spacer');
-        const revealLines = document.querySelectorAll('.reveal-line');
-        const totalLines = revealLines.length;
-
-        function checkReveal() {
-            const rect = contentSpacer.getBoundingClientRect();
-            const vh = window.innerHeight;
-            const scrollInto = -rect.top;
-            const totalScroll = contentSpacer.offsetHeight - vh;
-
-            // Lines reveal between 20%–70% of spacer scroll
-            const startAt = 0.2;
-            const endAt = 0.7;
-            const progress = Math.max(0, Math.min(1, scrollInto / totalScroll));
-
-            revealLines.forEach((line, i) => {
-                const lineStart = startAt + (endAt - startAt) * (i / totalLines);
-                if (progress >= lineStart) {
-                    line.classList.add('visible');
-                } else {
-                    line.classList.remove('visible');
-                }
-            });
-        }
-
-        lenis.on('scroll', checkReveal);
-        checkReveal();
 
         // --- WebGL Setup ---
         const canvas = document.getElementById('glCanvas');
@@ -1155,7 +1165,7 @@
             canvas.height = Math.floor(window.innerHeight * renderDpr);
             gl.viewport(0, 0, canvas.width, canvas.height);
         }
-        window.addEventListener('resize', resize);
+        window.addEventListener('resize', () => { resize(); cacheLayoutValues(); });
         resize();
 
         // --- Set STATIC uniforms once (these never change per frame) ---
@@ -1208,74 +1218,76 @@
             gl.drawArrays(gl.TRIANGLES, 0, 6);
         }
 
-        // --- SINGLE unified rAF loop (replaces 3 separate loops) ---
-        let heroVisible = true;
+        // --- SINGLE unified rAF loop ---
+        let rafId;
         function tick(now) {
-            // Lenis
             lenis.raf(now);
 
-            // Lerps
             const lerpFrame = 0.1;
             currentScale += (targetScale - currentScale) * lerpFrame;
             currentRadius += (targetRadius - currentRadius) * lerpFrame;
-            heroCard.style.transform = `scale(${currentScale})`;
-            heroCard.style.borderRadius = currentRadius + 'px';
-
             currentTitleY += (targetTitleY - currentTitleY) * lerpFrame;
-            mainContent.style.transform = `translateY(-${currentTitleY}px)`;
-
             shaderIntensity += (targetShaderIntensity - shaderIntensity) * 0.06;
-
             currentBgR += (targetBgR - currentBgR) * 0.12;
             currentBgG += (targetBgG - currentBgG) * 0.12;
             currentBgB += (targetBgB - currentBgB) * 0.12;
-            testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
-
             currentTrackX += (targetTrackX - currentTrackX) * 0.1;
-            testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
-
-            // Footer card scale lerps
             currentFooterScale += (targetFooterScale - currentFooterScale) * lerpFrame;
             currentFooterRadius += (targetFooterRadius - currentFooterRadius) * lerpFrame;
+
+            // Batch all DOM writes together (no reads between!)
+            heroCard.style.transform = `scale(${currentScale})`;
+            heroCard.style.borderRadius = currentRadius + 'px';
+            mainContent.style.transform = `translateY(-${currentTitleY}px)`;
+            testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
+            testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
             footerCard.style.transform = `scale(${currentFooterScale})`;
             footerCard.style.borderRadius = currentFooterRadius + 'px';
 
-            // WebGL — only render when hero is visible
-            heroVisible = heroCard.getBoundingClientRect().bottom > 0;
-            if (heroVisible) {
-                render(now);
+            // Boat position (batched from mousemove)
+            if (boatDirty) {
+                boat.style.left = boatMoveX + 'px';
+                boat.style.top = boatMoveY + 'px';
+                boat.style.transform = 'translate(-50%, -50%)' + (boatFacingLeft ? ' scaleX(-1)' : '');
+                boatDirty = false;
             }
 
-            // Footer WebGL — only render when footer is in viewport
-            const footerRect = footerSpacer.getBoundingClientRect();
-            if (footerRect.top < window.innerHeight && footerRect.bottom > 0) {
-                renderFooter(now);
-            }
+            // WebGL — use cached visibility flags (no getBoundingClientRect!)
+            if (heroInView) render(now);
+            if (footerInView) renderFooter(now);
 
-            requestAnimationFrame(tick);
+            rafId = requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
 
-        // --- Easter egg: boat follows mouse in footer ---
+        // Pause when tab is hidden, resume when visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                cancelAnimationFrame(rafId);
+            } else {
+                footerLastTime = performance.now();
+                rafId = requestAnimationFrame(tick);
+            }
+        });
+
+        // --- Easter egg: boat follows mouse in footer (batched into rAF) ---
         const boat = document.querySelector('.footer-boat');
         const footerSticky = document.querySelector('.footer-sticky');
         let boatFacingLeft = false;
         let lastMouseX = 0;
+        let boatMoveX = 0, boatMoveY = 0, boatDirty = false;
 
-        footerSticky.addEventListener('mouseenter', () => boat.classList.add('visible'));
-        footerSticky.addEventListener('mouseleave', () => boat.classList.remove('visible'));
+        footerSticky.addEventListener('mouseenter', () => boat.classList.add('visible'), { passive: true });
+        footerSticky.addEventListener('mouseleave', () => boat.classList.remove('visible'), { passive: true });
         footerSticky.addEventListener('mousemove', (e) => {
             const rect = footerSticky.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            boatMoveX = e.clientX - rect.left;
+            boatMoveY = e.clientY - rect.top;
             const dx = e.clientX - lastMouseX;
             lastMouseX = e.clientX;
             if (Math.abs(dx) > 1) boatFacingLeft = dx < 0;
-            const flip = boatFacingLeft ? ' scaleX(-1)' : '';
-            boat.style.left = x + 'px';
-            boat.style.top = y + 'px';
-            boat.style.transform = 'translate(-50%, -50%)' + flip;
-        });
+            boatDirty = true;
+        }, { passive: true });
 
         // --- Click ripple in footer (shader + card translucency) ---
         footerSticky.addEventListener('click', (e) => {
@@ -1361,7 +1373,7 @@
             fCanvas.height = Math.floor(fCanvas.clientHeight * renderDpr);
             fGl.viewport(0, 0, fCanvas.width, fCanvas.height);
         }
-        window.addEventListener('resize', resizeFooter);
+        window.addEventListener('resize', () => { resizeFooter(); cacheLayoutValues(); });
         resizeFooter();
 
         let footerTime = 0;
