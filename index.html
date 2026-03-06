@@ -461,12 +461,31 @@
             line-height: 1.4;
         }
 
-        .about-backed {
+        .backed-section {
+            margin-top: clamp(32px, 3vw, 56px);
+        }
+        .backed-title {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1.4rem, 1.8vw, 2.2rem);
+            color: #155EE8;
+            font-weight: 400;
+            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
+        }
+        .backed-logos {
+            display: flex;
+            align-items: center;
+            gap: clamp(20px, 2.5vw, 40px);
+            flex-wrap: wrap;
+        }
+        .backed-logos img {
+            height: clamp(24px, 3vw, 40px);
+            width: auto;
+            object-fit: contain;
+        }
+        .backed-logos .backed-text {
             font-size: clamp(0.85rem, 0.95vw, 1.1rem);
             color: rgba(21, 94, 232, 0.5);
-            margin: clamp(24px, 2.5vw, 40px) 0 0 0;
-            line-height: 1.4;
-            font-style: italic;
+            font-weight: 500;
         }
 
         /* Founders grid */
@@ -478,83 +497,47 @@
         }
         .founders-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: clamp(8px, 1vw, 16px);
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(12px, 1.5vw, 24px);
             max-width: 1400px;
             margin: 0 auto;
         }
         .founder-tile {
-            position: relative;
-            aspect-ratio: 1 / 1;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .founder-tile-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            transition: opacity 0.5s ease;
-            filter: url(#duotone-blue);
-        }
-        .founder-tile:hover .founder-tile-bg {
-            opacity: 1;
-            filter: none;
-        }
-        .founder-tile-overlay {
-            position: absolute;
-            inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: clamp(12px, 1.5vw, 24px);
-            transition: opacity 0.5s ease;
+            justify-content: space-between;
+            padding: clamp(20px, 2vw, 36px);
+            background: #f0f4fb;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
-        .founder-tile:hover .founder-tile-overlay {
-            opacity: 0;
+        .founder-tile:hover {
+            background: #e4ecfa;
+        }
+        .founder-tile-top {
+            display: flex;
+            flex-direction: column;
         }
         .founder-tile-company {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.2rem, 1.8vw, 2.4rem);
+            font-size: clamp(1.4rem, 2vw, 2.8rem);
             color: #155EE8;
             font-weight: 400;
-            line-height: 1.2;
+            line-height: 1.15;
         }
         .founder-tile-name {
-            font-size: clamp(0.7rem, 0.8vw, 0.95rem);
-            color: rgba(21, 94, 232, 0.5);
-            margin-top: 4px;
+            font-size: clamp(0.7rem, 0.85vw, 1rem);
+            color: rgba(21, 94, 232, 0.45);
+            margin-top: clamp(4px, 0.4vw, 8px);
         }
-        .founder-tile-hover {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: clamp(12px, 1.5vw, 24px);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+        .founder-tile-flag {
+            align-self: flex-start;
         }
-        .founder-tile:hover .founder-tile-hover {
-            opacity: 1;
-        }
-        .founder-tile-hover .founder-tile-company {
-            color: #fff;
-        }
-        .founder-tile-hover .founder-tile-name {
-            color: rgba(255,255,255,0.7);
-        }
-        /* Placeholder tiles without photos */
-        .founder-tile.no-photo {
-            background: #f0f4fb;
-        }
-        .founder-tile.no-photo .founder-tile-bg {
-            display: none;
-        }
-        .founder-tile.no-photo:hover .founder-tile-overlay {
-            opacity: 1;
+        .founder-tile-flag svg {
+            width: clamp(28px, 2.5vw, 40px);
+            height: auto;
+            border-radius: 2px;
         }
         @media (max-width: 768px) {
             .founders-grid { grid-template-columns: repeat(2, 1fr); }
@@ -802,64 +785,94 @@
     <!-- Founders grid -->
     <div class="founders-grid-section">
         <div class="founders-grid">
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Minimal AI</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#f0f0f0"/><rect width="60" height="5.7" y="0" fill="#B22234"/><rect width="60" height="5.7" y="7.7" fill="#B22234"/><rect width="60" height="5.7" y="15.4" fill="#B22234"/><rect width="60" height="5.7" y="23.1" fill="#B22234"/><rect width="60" height="5.7" y="30.8" fill="#B22234"/><rect width="24" height="21.5" fill="#3C3B6E"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Dedalus Labs</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Entire</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><rect width="60" height="13.3" fill="#000"/><rect y="26.7" width="60" height="13.3" fill="#FFCE00"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Blurry</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="5"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Fullseam</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="15" height="40" fill="#FF0000"/><rect x="15" width="30" height="40" fill="#fff"/><rect x="45" width="15" height="40" fill="#FF0000"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Duranta</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#009B3A"/><path d="M30,5 L55,20 L30,35 L5,20 Z" fill="#FEDF00"/><circle cx="30" cy="20" r="7" fill="#002776"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">The Interface</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="13.3" fill="#AE1C28"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#21468B"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Astor</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#009739"/><rect width="60" height="13.3" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#CE1126"/><rect width="16" height="40" fill="#000"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Pillar</span>
                     <span class="founder-tile-name">Name Surname</span>
                 </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><rect y="7" width="60" height="5" fill="#0038b8"/><rect y="28" width="60" height="5" fill="#0038b8"/></svg>
+                </div>
             </div>
-            <div class="founder-tile no-photo">
-                <div class="founder-tile-overlay">
+            <div class="founder-tile">
+                <div class="founder-tile-top">
                     <span class="founder-tile-company">Paloma</span>
                     <span class="founder-tile-name">Name Surname</span>
+                </div>
+                <div class="founder-tile-flag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><circle cx="30" cy="20" r="10" fill="#BC002D"/></svg>
                 </div>
             </div>
         </div>
@@ -971,7 +984,15 @@
                     <span class="spec-value">Sector Agnostic</span>
                 </li>
             </ul>
-            <p class="about-backed">Backed by Accell, Taplow Blue Capital, Fund A, Fund B</p>
+            <div class="backed-section">
+                <h3 class="backed-title">Backed by:</h3>
+                <div class="backed-logos">
+                    <span class="backed-text">Accell</span>
+                    <span class="backed-text">Taplow Blue Capital</span>
+                    <span class="backed-text">Fund A</span>
+                    <span class="backed-text">Fund B</span>
+                </div>
+            </div>
         </div>
         <div class="about-divider"></div>
         <div class="about-col">
