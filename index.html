@@ -402,15 +402,16 @@
             font-weight: 400;
         }
 
-        /* Footer — card over WebGL lake */
+        /* Footer — white scales down to card, revealing WebGL lake */
         .footer-scroll-spacer {
-            height: 100vh;
+            height: 200vh;
             position: relative;
             z-index: 2;
         }
 
         .footer-sticky {
-            position: relative;
+            position: sticky;
+            top: 0;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -433,7 +434,7 @@
             width: clamp(340px, 50vw, 700px);
             height: clamp(300px, 45vh, 500px);
             background: #fff;
-            border-radius: 22px;
+            border-radius: 0;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -441,6 +442,8 @@
             justify-content: center;
             text-align: center;
             padding: clamp(40px, 4vw, 80px) clamp(30px, 3vw, 60px);
+            will-change: transform, border-radius;
+            transform-origin: center center;
         }
 
         .footer-main {
@@ -903,8 +906,27 @@
         let currentBgR = 255, currentBgG = 255, currentBgB = 255;
         let targetBgR = 255, targetBgG = 255, targetBgB = 255;
 
-        // Footer
+        // Footer — scale card from full-screen down to natural size
         const footerSpacer = document.querySelector('.footer-scroll-spacer');
+        const footerCard = document.getElementById('footerCard');
+        let currentFooterScale = 1;
+        let currentFooterRadius = 0;
+        let targetFooterScale = 1;
+        let targetFooterRadius = 0;
+
+        function getFooterFullScale() {
+            const cardW = footerCard.offsetWidth;
+            const cardH = footerCard.offsetHeight;
+            const sX = window.innerWidth / cardW;
+            const sY = window.innerHeight / cardH;
+            return Math.max(sX, sY);
+        }
+
+        // Initialize at full-screen scale
+        const initScale = getFooterFullScale();
+        currentFooterScale = initScale;
+        targetFooterScale = initScale;
+        footerCard.style.transform = `scale(${initScale})`;
 
         function updateTargets() {
             const scrollY = window.scrollY;
@@ -943,6 +965,15 @@
             const viewWidth = window.innerWidth;
             const maxTranslate = trackWidth - viewWidth + 120;
             targetTrackX = -scrollProgress * maxTranslate;
+
+            // Footer — white scales down from full-screen to card
+            const footerRect = footerSpacer.getBoundingClientRect();
+            const footerScrollInto = -footerRect.top;
+            const footerFrameZone = vh * 1.0;
+            const footerProgress = Math.max(0, Math.min(1, footerScrollInto / footerFrameZone));
+            const fullScale = getFooterFullScale();
+            targetFooterScale = fullScale - footerProgress * (fullScale - 1);
+            targetFooterRadius = footerProgress * 22;
         }
 
         // Lenis smooth scroll
@@ -1114,6 +1145,12 @@
 
             currentTrackX += (targetTrackX - currentTrackX) * 0.06;
             testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
+
+            // Footer card scale lerps
+            currentFooterScale += (targetFooterScale - currentFooterScale) * lerpFrame;
+            currentFooterRadius += (targetFooterRadius - currentFooterRadius) * lerpFrame;
+            footerCard.style.transform = `scale(${currentFooterScale})`;
+            footerCard.style.borderRadius = currentFooterRadius + 'px';
 
             // WebGL — only render when hero is visible
             heroVisible = heroCard.getBoundingClientRect().bottom > 0;
