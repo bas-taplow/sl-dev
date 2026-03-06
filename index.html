@@ -1234,8 +1234,8 @@
         function tickBoat() {
             const dx = boatTargetX - boatX;
             const dy = boatTargetY - boatY;
-            boatX += dx * 0.12;
-            boatY += dy * 0.12;
+            boatX = boatTargetX;
+            boatY = boatTargetY;
             if (Math.abs(dx) > 1) boatFacingLeft = dx < 0;
             const flip = boatFacingLeft ? 'scaleX(-1)' : 'scaleX(1)';
             boat.style.transform = `translate(${boatX - boat.offsetWidth / 2}px, ${boatY - boat.offsetHeight / 2}px) ${flip}`;
