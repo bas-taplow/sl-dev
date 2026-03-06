@@ -584,7 +584,7 @@
         }
         .founders-row {
             display: grid;
-            grid-template-columns: clamp(160px, 22vw, 320px) clamp(120px, 14vw, 200px) 1fr;
+            grid-template-columns: clamp(160px, 22vw, 320px) clamp(120px, 14vw, 200px) 1fr auto;
             align-items: center;
             padding: clamp(24px, 2.5vw, 40px) 0;
             border-bottom: 1px solid #155EE8;
@@ -628,13 +628,35 @@
             flex-shrink: 0;
         }
         .founders-row-region-country {
-            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
-            color: #155EE8;
+            font-size: clamp(0.7rem, 0.75vw, 0.85rem);
+            color: rgba(21, 94, 232, 0.45);
         }
         .founders-row-desc {
             font-size: clamp(0.85rem, 0.95vw, 1.1rem);
             color: rgba(21, 94, 232, 0.6);
             line-height: 1.5;
+        }
+        .founders-row-arrow {
+            flex-shrink: 0;
+            width: clamp(36px, 3vw, 48px);
+            height: clamp(36px, 3vw, 48px);
+            border: 1px solid rgba(21, 94, 232, 0.25);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .founders-row:hover .founders-row-arrow {
+            border-color: #155EE8;
+            background: rgba(21, 94, 232, 0.05);
+        }
+        .founders-row-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: #155EE8;
+            fill: none;
+            stroke-width: 2;
         }
 
         @media (max-width: 768px) {
@@ -1014,6 +1036,7 @@
                     <span class="founders-row-region-country">USA</span>
                 </div>
                 <div class="founders-row-desc">Enterprise AI agents that automate complex back-office workflows.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1025,6 +1048,7 @@
                     <span class="founders-row-region-country">France</span>
                 </div>
                 <div class="founders-row-desc">Next-generation compute infrastructure for decentralized AI training.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1036,6 +1060,7 @@
                     <span class="founders-row-region-country">Germany</span>
                 </div>
                 <div class="founders-row-desc">Unified platform replacing fragmented supply chain software for manufacturers.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1047,6 +1072,7 @@
                     <span class="founders-row-region-country">UK</span>
                 </div>
                 <div class="founders-row-desc">Privacy-first identity verification for financial services and healthcare.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1058,6 +1084,7 @@
                     <span class="founders-row-region-country">Canada</span>
                 </div>
                 <div class="founders-row-desc">Seamless integration layer connecting legacy ERP systems to modern tools.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1069,6 +1096,7 @@
                     <span class="founders-row-region-country">Brazil</span>
                 </div>
                 <div class="founders-row-desc">Climate-resilient agriculture technology for emerging market farmers.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1080,6 +1108,7 @@
                     <span class="founders-row-region-country">Netherlands</span>
                 </div>
                 <div class="founders-row-desc">Developer tools that turn natural language into production-ready APIs.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1091,6 +1120,7 @@
                     <span class="founders-row-region-country">UAE</span>
                 </div>
                 <div class="founders-row-desc">Autonomous logistics platform for last-mile delivery in dense cities.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1102,6 +1132,7 @@
                     <span class="founders-row-region-country">Israel</span>
                 </div>
                 <div class="founders-row-desc">Embedded compliance infrastructure for cross-border fintech companies.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
             <div class="founders-row">
                 <div class="founders-row-info">
@@ -1113,6 +1144,7 @@
                     <span class="founders-row-region-country">Japan</span>
                 </div>
                 <div class="founders-row-desc">Conversational commerce platform powering direct-to-consumer brands in Asia.</div>
+                <a class="founders-row-arrow" href="#"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
             </div>
         </div>
     </div>
