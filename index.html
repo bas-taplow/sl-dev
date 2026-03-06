@@ -584,11 +584,18 @@
         }
         .founders-row {
             display: grid;
-            grid-template-columns: clamp(140px, 18vw, 260px) clamp(120px, 14vw, 200px) 1fr;
-            align-items: start;
+            grid-template-columns: clamp(160px, 22vw, 320px) clamp(120px, 14vw, 200px) 1fr;
+            align-items: center;
             padding: clamp(24px, 2.5vw, 40px) 0;
             border-bottom: 1px solid #155EE8;
             gap: clamp(16px, 2vw, 32px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .founders-row.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .founders-row:last-child {
             border-bottom: none;
@@ -599,10 +606,10 @@
         }
         .founders-row-name {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.1rem, 1.4vw, 1.8rem);
+            font-size: clamp(1.8rem, 2.8vw, 4rem);
             color: #155EE8;
             font-weight: 400;
-            line-height: 1.2;
+            line-height: 1.1;
         }
         .founders-row-category {
             font-size: clamp(0.75rem, 0.85vw, 0.95rem);
@@ -611,16 +618,18 @@
         }
         .founders-row-region {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: clamp(8px, 0.8vw, 12px);
         }
-        .founders-row-region-name {
-            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
-            color: #155EE8;
+        .founders-row-region svg {
+            width: clamp(24px, 2vw, 32px);
+            height: auto;
+            border-radius: 2px;
+            flex-shrink: 0;
         }
         .founders-row-region-country {
-            font-size: clamp(0.75rem, 0.85vw, 0.95rem);
-            color: rgba(21, 94, 232, 0.4);
-            margin-top: 2px;
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            color: #155EE8;
         }
         .founders-row-desc {
             font-size: clamp(0.85rem, 0.95vw, 1.1rem);
@@ -1001,7 +1010,7 @@
                     <div class="founders-row-category">Artificial Intelligence</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">North America</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#f0f0f0"/><rect width="60" height="5.7" y="0" fill="#B22234"/><rect width="60" height="5.7" y="7.7" fill="#B22234"/><rect width="60" height="5.7" y="15.4" fill="#B22234"/><rect width="60" height="5.7" y="23.1" fill="#B22234"/><rect width="60" height="5.7" y="30.8" fill="#B22234"/><rect width="24" height="21.5" fill="#3C3B6E"/></svg>
                     <span class="founders-row-region-country">USA</span>
                 </div>
                 <div class="founders-row-desc">Enterprise AI agents that automate complex back-office workflows.</div>
@@ -1012,7 +1021,7 @@
                     <div class="founders-row-category">Deep Tech</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>
                     <span class="founders-row-region-country">France</span>
                 </div>
                 <div class="founders-row-desc">Next-generation compute infrastructure for decentralized AI training.</div>
@@ -1023,7 +1032,7 @@
                     <div class="founders-row-category">Enterprise Software</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><rect width="60" height="13.3" fill="#000"/><rect y="26.7" width="60" height="13.3" fill="#FFCE00"/></svg>
                     <span class="founders-row-region-country">Germany</span>
                 </div>
                 <div class="founders-row-desc">Unified platform replacing fragmented supply chain software for manufacturers.</div>
@@ -1034,7 +1043,7 @@
                     <div class="founders-row-category">Fintech</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="5"/></svg>
                     <span class="founders-row-region-country">UK</span>
                 </div>
                 <div class="founders-row-desc">Privacy-first identity verification for financial services and healthcare.</div>
@@ -1045,7 +1054,7 @@
                     <div class="founders-row-category">Enterprise Software</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">North America</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="15" height="40" fill="#FF0000"/><rect x="15" width="30" height="40" fill="#fff"/><rect x="45" width="15" height="40" fill="#FF0000"/></svg>
                     <span class="founders-row-region-country">Canada</span>
                 </div>
                 <div class="founders-row-desc">Seamless integration layer connecting legacy ERP systems to modern tools.</div>
@@ -1056,7 +1065,7 @@
                     <div class="founders-row-category">Climate Tech</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">LATAM</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#009B3A"/><path d="M30,5 L55,20 L30,35 L5,20 Z" fill="#FEDF00"/><circle cx="30" cy="20" r="7" fill="#002776"/></svg>
                     <span class="founders-row-region-country">Brazil</span>
                 </div>
                 <div class="founders-row-desc">Climate-resilient agriculture technology for emerging market farmers.</div>
@@ -1067,7 +1076,7 @@
                     <div class="founders-row-category">Developer Tools</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="13.3" fill="#AE1C28"/><rect y="13.3" width="60" height="13.4" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#21468B"/></svg>
                     <span class="founders-row-region-country">Netherlands</span>
                 </div>
                 <div class="founders-row-desc">Developer tools that turn natural language into production-ready APIs.</div>
@@ -1078,7 +1087,7 @@
                     <div class="founders-row-category">Logistics</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#009739"/><rect width="60" height="13.3" fill="#fff"/><rect y="26.7" width="60" height="13.3" fill="#CE1126"/><rect width="16" height="40" fill="#000"/></svg>
                     <span class="founders-row-region-country">UAE</span>
                 </div>
                 <div class="founders-row-desc">Autonomous logistics platform for last-mile delivery in dense cities.</div>
@@ -1089,7 +1098,7 @@
                     <div class="founders-row-category">Fintech</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">EMEA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><rect y="7" width="60" height="5" fill="#0038b8"/><rect y="28" width="60" height="5" fill="#0038b8"/></svg>
                     <span class="founders-row-region-country">Israel</span>
                 </div>
                 <div class="founders-row-desc">Embedded compliance infrastructure for cross-border fintech companies.</div>
@@ -1100,7 +1109,7 @@
                     <div class="founders-row-category">Commerce</div>
                 </div>
                 <div class="founders-row-region">
-                    <span class="founders-row-region-name">APAC</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect width="60" height="40" fill="#fff"/><circle cx="30" cy="20" r="10" fill="#BC002D"/></svg>
                     <span class="founders-row-region-country">Japan</span>
                 </div>
                 <div class="founders-row-desc">Conversational commerce platform powering direct-to-consumer brands in Asia.</div>
@@ -1975,8 +1984,29 @@
             foundersRows.classList.remove('active');
             if (btn.dataset.view === 'grid') foundersGrid.classList.remove('hidden');
             else if (btn.dataset.view === 'list') foundersList.classList.add('active');
-            else if (btn.dataset.view === 'rows') foundersRows.classList.add('active');
+            else if (btn.dataset.view === 'rows') {
+                foundersRows.classList.add('active');
+                const rows = foundersRows.querySelectorAll('.founders-row');
+                rows.forEach((row, i) => {
+                    row.classList.remove('visible');
+                    setTimeout(() => row.classList.add('visible'), i * 100);
+                });
+            }
         });
+
+        /* Rows entrance on scroll */
+        const rowObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const rows = foundersRows.querySelectorAll('.founders-row');
+                    rows.forEach((row, i) => {
+                        setTimeout(() => row.classList.add('visible'), i * 100);
+                    });
+                    rowObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        rowObserver.observe(foundersRows);
     </script>
 </body>
 </html>
