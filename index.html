@@ -446,6 +446,16 @@
             transform-origin: center center;
         }
 
+        .footer-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+        }
+
         .footer-main {
             flex: 1;
             display: flex;
@@ -690,6 +700,7 @@
         <div class="footer-sticky">
             <canvas id="footerCanvas"></canvas>
             <div class="footer-card" id="footerCard">
+              <div class="footer-inner" id="footerInner">
                 <div class="footer-main">
                     <h2 class="footer-title">Get in Touch</h2>
                     <div class="footer-contact">
@@ -720,6 +731,7 @@
           <path d="M701.88,119.47c-6.64-5.93-17.14-10.36-32.56-13.96h0c-11.79-2.78-18.64-5.52-22.54-8.9-3.83-3.31-4.9-7.29-4.9-12.85,0-5.15,1.85-9.93,5.4-13.43,3.55-3.49,8.85-5.75,15.87-5.75,18.07,0,31.54,14.69,39.84,33.12l.19.42h1.64v-39.92h-1.76c-2.36,3.77-6.47,6.53-10.52,6.56-3.78.03-7.39-1.5-12.03-3.08-4.6-1.57-10.07-3.16-17.35-3.16-10.07,0-19.72,2.81-26.86,8.24-7.17,5.45-11.79,13.52-11.79,23.94,0,8.82,2.42,16.13,8.28,22.02,5.83,5.86,15.01,10.24,28.37,13.38h0c10.07,2.32,18.12,4.67,23.64,8.1,2.75,1.71,4.85,3.67,6.26,5.99,1.41,2.32,2.16,5.05,2.16,8.35,0,7.09-2.75,12.67-7.16,16.49-4.42,3.83-10.55,5.93-17.35,5.93-20.83,0-34.31-14.9-44.22-38.89l-.18-.44h-1.7v45.39h3.65l.2-.25c2.78-3.24,5.36-5.77,9.41-5.77,1.7,0,3.58.36,5.73.92,2.16.56,4.51,1.3,7.2,2.06,5.35,1.51,11.84,3.04,19.92,3.04,10.87,0,21.49-2.8,29.42-8.55,7.95-5.77,13.16-14.48,13.16-26.17,0-9.41-2.72-16.85-9.41-22.83h-.01Z"/>
             </svg>
                 </div>
+              </div>
             </div>
         </div>
     </div>
@@ -909,6 +921,7 @@
         // Footer — scale card from full-screen down to natural size
         const footerSpacer = document.querySelector('.footer-scroll-spacer');
         const footerCard = document.getElementById('footerCard');
+        const footerInner = document.getElementById('footerInner');
         let currentFooterScale = 1;
         let currentFooterRadius = 0;
         let targetFooterScale = 1;
@@ -1151,6 +1164,9 @@
             currentFooterRadius += (targetFooterRadius - currentFooterRadius) * lerpFrame;
             footerCard.style.transform = `scale(${currentFooterScale})`;
             footerCard.style.borderRadius = currentFooterRadius + 'px';
+            // Counter-scale content so text/logo stay fixed size
+            const counterScale = 1 / currentFooterScale;
+            footerInner.style.transform = `scale(${counterScale})`;
 
             // WebGL — only render when hero is visible
             heroVisible = heroCard.getBoundingClientRect().bottom > 0;
