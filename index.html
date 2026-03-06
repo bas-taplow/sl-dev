@@ -69,14 +69,14 @@
         /* Top Left Logo */
         .logo-container {
             position: absolute;
-            top: 40px;
-            left: 60px;
+            top: clamp(20px, 3vw, 60px);
+            left: clamp(20px, 4vw, 80px);
             z-index: 10;
             pointer-events: none;
         }
 
         .logo-img {
-            height: 24px;
+            height: clamp(18px, 1.8vw, 40px);
             width: auto;
             aspect-ratio: 1626 / 177;
             display: block;
@@ -87,7 +87,7 @@
         .main-content {
             position: absolute;
             top: 50%;
-            left: 60px;
+            left: clamp(20px, 4vw, 80px);
             transform: translateY(-50%);
             z-index: 10;
             color: #ffffff;
@@ -95,12 +95,12 @@
             flex-direction: column;
             align-items: flex-start;
             pointer-events: none;
-            max-width: 900px;
+            max-width: clamp(600px, 50vw, 1200px);
         }
 
         .title {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 5rem;
+            font-size: clamp(3rem, 5vw, 7rem);
             font-weight: 400;
             line-height: 1.1;
             margin: 0;
@@ -123,17 +123,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 120px 60px;
+            padding: clamp(80px, 8vw, 160px) clamp(20px, 4vw, 80px);
             text-align: center;
             background: #ffffff;
         }
 
         .content-sticky p {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 2.4rem;
+            font-size: clamp(1.4rem, 2.2vw, 3.2rem);
             line-height: 1.6;
             color: #155EE8;
-            max-width: 780px;
+            max-width: clamp(500px, 50vw, 1000px);
             margin: 0;
             font-weight: 400;
         }
@@ -167,8 +167,8 @@
 
         .testimonials-track {
             display: flex;
-            gap: 40px;
-            padding: 0 60px;
+            gap: clamp(20px, 3vw, 50px);
+            padding: 0 clamp(20px, 4vw, 80px);
             position: absolute;
             top: 50%;
             transform: translateY(-50%) translateX(0);
@@ -178,7 +178,7 @@
 
         .section-intro {
             flex-shrink: 0;
-            width: 500px;
+            width: clamp(280px, 30vw, 600px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -187,7 +187,7 @@
 
         .section-title {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 4rem;
+            font-size: clamp(2.4rem, 3.8vw, 5.5rem);
             font-weight: 400;
             color: #fff;
             margin: 0 0 24px 0;
@@ -195,17 +195,17 @@
         }
 
         .section-subtitle {
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.1vw, 1.5rem);
             line-height: 1.6;
             color: rgba(255,255,255,0.75);
             margin: 0;
-            max-width: 400px;
+            max-width: clamp(300px, 25vw, 500px);
         }
 
         .portfolio-card {
             flex-shrink: 0;
-            width: 800px;
-            height: 520px;
+            width: clamp(340px, 45vw, 1000px);
+            height: clamp(420px, 34vw, 650px);
             background: #fff;
             border-radius: 19px;
             display: flex;
@@ -215,7 +215,7 @@
 
         .portfolio-card .card-content {
             width: 50%;
-            padding: 50px;
+            padding: clamp(30px, 3vw, 60px);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -239,7 +239,7 @@
 
         .portfolio-card .company-name {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 2.4rem;
+            font-size: clamp(1.8rem, 2vw, 3rem);
             font-weight: 400;
             color: #155EE8;
             margin: 0;
@@ -255,7 +255,7 @@
 
         .portfolio-card .story {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 1.1vw, 1.6rem);
             line-height: 1.45;
             color: #155EE8;
             margin: 0;
@@ -281,7 +281,7 @@
 
         .portfolio-card .metric-value {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 1.6rem;
+            font-size: clamp(1.2rem, 1.4vw, 2rem);
             color: #155EE8;
             font-weight: 400;
         }
@@ -298,14 +298,14 @@
         .marquee-track {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: clamp(30px, 3.5vw, 70px);
             animation: marquee 25s linear infinite;
             width: max-content;
         }
 
         .marquee-track span {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 1.2vw, 1.8rem);
             color: #155EE8;
             white-space: nowrap;
             font-weight: 400;
@@ -326,7 +326,7 @@
             position: relative;
             z-index: 2;
             background: #fff;
-            padding: 120px 60px 80px;
+            padding: clamp(80px, 8vw, 160px) clamp(20px, 4vw, 80px) clamp(60px, 5vw, 100px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -337,7 +337,7 @@
 
         .footer-title {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: 4rem;
+            font-size: clamp(2.8rem, 3.8vw, 5.5rem);
             font-weight: 400;
             color: #155EE8;
             margin: 0 0 60px 0;
@@ -351,7 +351,7 @@
         }
 
         .footer-contact a {
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 1vw, 1.3rem);
             color: #155EE8;
             text-decoration: none;
             letter-spacing: 0.02em;
@@ -363,29 +363,15 @@
         }
 
         .footer-logo {
-            height: 28px;
+            height: clamp(24px, 2vw, 40px);
             width: auto;
         }
 
         @media (max-width: 768px) {
-            .main-content { left: 20px; right: 20px; }
-            .logo-container { top: 20px; left: 20px; }
-            .title { font-size: 3rem; }
-            .logo-img { height: 18px; }
-            .content-sticky { padding: 80px 20px; }
-            .content-sticky p { font-size: 1.4rem; }
-            .section-intro { width: 280px; }
-            .section-title { font-size: 2.4rem; }
-            .section-subtitle { font-size: 1rem; }
-            .portfolio-card { width: 340px; height: auto; flex-direction: column; }
-            .portfolio-card .card-content { width: 100%; padding: 30px; }
+            .main-content { right: 20px; }
+            .portfolio-card { height: auto; flex-direction: column; }
+            .portfolio-card .card-content { width: 100%; }
             .portfolio-card .card-photo { width: 100%; height: 200px; }
-            .portfolio-card .company-name { font-size: 1.8rem; }
-            .portfolio-card .story { font-size: 1rem; }
-            .portfolio-card .metric-value { font-size: 1.2rem; }
-            .testimonials-track { padding: 0 20px; gap: 20px; }
-            .site-footer { padding: 80px 20px 60px; }
-            .footer-title { font-size: 2.8rem; }
         }
     </style>
 </head>
