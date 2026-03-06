@@ -573,9 +573,80 @@
             line-height: 1.3;
         }
 
+        /* V3: full-width rows */
+        .founders-rows {
+            display: none;
+            flex-direction: column;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #111;
+            border-radius: clamp(12px, 1.2vw, 20px);
+            overflow: hidden;
+        }
+        .founders-rows.active {
+            display: flex;
+        }
+        .founders-row {
+            display: flex;
+            align-items: center;
+            padding: clamp(20px, 2vw, 36px) clamp(24px, 3vw, 48px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s ease;
+        }
+        .founders-row:last-child {
+            border-bottom: none;
+        }
+        .founders-row:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .founders-row-logo {
+            width: clamp(80px, 8vw, 120px);
+            flex-shrink: 0;
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(0.9rem, 1.1vw, 1.4rem);
+            color: rgba(255,255,255,0.5);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .founders-row-info {
+            flex: 1;
+            padding-left: clamp(16px, 2vw, 32px);
+        }
+        .founders-row-name {
+            font-family: inherit;
+            font-size: clamp(1rem, 1.3vw, 1.6rem);
+            color: #fff;
+            font-weight: 600;
+        }
+        .founders-row-desc {
+            font-size: clamp(0.8rem, 0.9vw, 1.05rem);
+            color: rgba(255,255,255,0.45);
+            margin-top: 4px;
+        }
+        .founders-row-arrow {
+            flex-shrink: 0;
+            width: clamp(36px, 3vw, 48px);
+            height: clamp(36px, 3vw, 48px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: clamp(16px, 2vw, 32px);
+        }
+        .founders-row-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: rgba(255,255,255,0.5);
+            fill: none;
+            stroke-width: 2;
+        }
+
         @media (max-width: 768px) {
             .founders-grid { grid-template-columns: repeat(2, 1fr); }
             .founders-list { grid-template-columns: repeat(2, 1fr); }
+            .founders-row-logo { display: none; }
         }
 
         /* Footer — white scales down to card, revealing WebGL lake */
@@ -824,6 +895,7 @@
             <div class="view-toggle" id="viewToggle">
                 <button class="active" data-view="grid">Grid</button>
                 <button data-view="list">List</button>
+                <button data-view="rows">Rows</button>
             </div>
         </div>
         <div class="founders-grid" id="foundersGrid">
@@ -934,6 +1006,88 @@
             <div class="founders-list-col">
                 <span class="founders-list-name">Pillar</span>
                 <span class="founders-list-name">Paloma</span>
+            </div>
+        </div>
+        <div class="founders-rows" id="foundersRows">
+            <div class="founders-row">
+                <div class="founders-row-logo">Minimal</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Minimal AI</div>
+                    <div class="founders-row-desc">Enterprise AI agents that automate complex back-office workflows.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Dedalus</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Dedalus Labs</div>
+                    <div class="founders-row-desc">Next-generation compute infrastructure for decentralized AI training.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Entire</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Entire</div>
+                    <div class="founders-row-desc">Unified platform replacing fragmented supply chain software for manufacturers.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Blurry</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Blurry</div>
+                    <div class="founders-row-desc">Privacy-first identity verification for financial services and healthcare.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Fullseam</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Fullseam</div>
+                    <div class="founders-row-desc">Seamless integration layer connecting legacy ERP systems to modern tools.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Duranta</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Duranta</div>
+                    <div class="founders-row-desc">Climate-resilient agriculture technology for emerging market farmers.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Interface</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">The Interface</div>
+                    <div class="founders-row-desc">Developer tools that turn natural language into production-ready APIs.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Astor</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Astor</div>
+                    <div class="founders-row-desc">Autonomous logistics platform for last-mile delivery in dense cities.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Pillar</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Pillar</div>
+                    <div class="founders-row-desc">Embedded compliance infrastructure for cross-border fintech companies.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+            </div>
+            <div class="founders-row">
+                <div class="founders-row-logo">Paloma</div>
+                <div class="founders-row-info">
+                    <div class="founders-row-name">Paloma</div>
+                    <div class="founders-row-desc">Conversational commerce platform powering direct-to-consumer brands in Asia.</div>
+                </div>
+                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
             </div>
         </div>
     </div>
@@ -1790,22 +1944,22 @@
         if (gridTitle) gridObserver.observe(gridTitle);
         tiles.forEach(t => gridObserver.observe(t));
 
-        /* View toggle: grid ↔ list */
+        /* View toggle: grid ↔ list ↔ rows */
         const viewToggle = document.getElementById('viewToggle');
         const foundersGrid = document.getElementById('foundersGrid');
         const foundersList = document.getElementById('foundersList');
+        const foundersRows = document.getElementById('foundersRows');
         viewToggle.addEventListener('click', (e) => {
             const btn = e.target.closest('button');
             if (!btn) return;
             viewToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            if (btn.dataset.view === 'list') {
-                foundersGrid.classList.add('hidden');
-                foundersList.classList.add('active');
-            } else {
-                foundersGrid.classList.remove('hidden');
-                foundersList.classList.remove('active');
-            }
+            foundersGrid.classList.add('hidden');
+            foundersList.classList.remove('active');
+            foundersRows.classList.remove('active');
+            if (btn.dataset.view === 'grid') foundersGrid.classList.remove('hidden');
+            else if (btn.dataset.view === 'list') foundersList.classList.add('active');
+            else if (btn.dataset.view === 'rows') foundersRows.classList.add('active');
         });
     </script>
 </body>
