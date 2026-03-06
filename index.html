@@ -1425,6 +1425,7 @@
 
         // --- Click ripple in footer (shader + card translucency) ---
         footerSticky.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
             const rect = footerSticky.getBoundingClientRect();
             clickPos[0] = (e.clientX - rect.left) / rect.width;
             clickPos[1] = 1.0 - (e.clientY - rect.top) / rect.height;
