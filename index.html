@@ -1342,6 +1342,7 @@
         }
 
         let footerFullyScrolled = false;
+        const boat = document.querySelector('.footer-boat');
 
         // Initialize at full-screen scale
         const initScale = getFooterFullScale();
@@ -1608,7 +1609,6 @@
         });
 
         // --- Easter egg: boat follows mouse in footer (batched into rAF) ---
-        const boat = document.querySelector('.footer-boat');
         const footerSticky = document.querySelector('.footer-sticky');
         let boatFacingLeft = false;
         let lastMouseX = 0;
