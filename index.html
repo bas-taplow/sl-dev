@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sunshine Lake Capital</title>
+    <meta name="description" content="Sunshine Lake Capital backs exceptional founders at the earliest stages — Pre-Seed and Seed investments in globally-minded entrepreneurs.">
+    <meta property="og:title" content="Sunshine Lake Capital">
+    <meta property="og:description" content="Global founders forge the future. Pre-Seed and Seed investments in exceptional entrepreneurs shaped by uncommon beginnings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sunshinelake.vc">
+    <link rel="preload" href="DomaineDisp-Regular.otf" as="font" type="font/otf" crossorigin>
     <style>
         @font-face {
             font-family: 'DomaineDisp';
             src: url('DomaineDisp-Regular.otf') format('opentype');
             font-weight: 400;
             font-style: normal;
+            font-display: swap;
         }
 
         /* Base Reset */
@@ -495,6 +502,13 @@
             pointer-events: none;
         }
 
+        .footer-legal {
+            font-size: clamp(0.65rem, 0.7vw, 0.85rem);
+            color: rgba(21, 94, 232, 0.4);
+            margin: 0 0 clamp(12px, 1.5vw, 24px) 0;
+            letter-spacing: 0.02em;
+        }
+
         .footer-logo {
             height: clamp(24px, 2vw, 40px);
             width: auto;
@@ -512,6 +526,13 @@
             will-change: transform;
         }
         .footer-boat.visible { opacity: 0.85; }
+
+        /* Hero loading state */
+        .hero-card { opacity: 0; transition: opacity 0.8s ease; }
+        .hero-card.loaded { opacity: 1; }
+
+        /* Focus styles for keyboard navigation */
+        :focus-visible { outline: 2px solid #155EE8; outline-offset: 3px; }
 
         /* Card translucency driven by JS */
 
@@ -561,6 +582,7 @@
         </defs>
     </svg>
 
+    <main>
     <!-- Hero with scroll-driven frame effect -->
     <div class="hero-scroll-spacer">
         <div class="hero-sticky">
@@ -570,7 +592,7 @@
 
                 <!-- 2. Top Left Logo -->
                 <div class="logo-container">
-                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1626.32 177.05" width="1626" height="177" class="logo-img" fill="#ffffff">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1626.32 177.05" width="1626" height="177" class="logo-img" fill="#ffffff" aria-label="Sunshine Lake Capital" role="img">
                       <g>
                         <path d="M867.39,37.06c8.72,0,15.29-6.56,15.29-15.06s-6.57-15.06-15.29-15.06-15.29,6.56-15.29,15.06,6.57,15.06,15.29,15.06Z"/>
                         <path d="M604.94,164.82c-1.82-3.53-2.35-8.4-2.35-16.04v-49.28c0-13.43-3.74-23.69-10.26-30.59-6.52-6.91-15.75-10.37-26.55-10.37-10.11,0-18.89,3.24-25.94,9.25-6.09,5.2-10.85,12.44-14.06,21.4v-28.34h-36.13v1.65l.44.18c5.45,2.27,8.89,5.07,10.99,8.85,2.11,3.8,2.92,8.69,2.92,15.24v62c0,7.64-.53,12.51-2.35,16.04-1.79,3.48-4.9,5.77-10.4,8.05l-.44.18v1.65h48.16v-1.65l-.44-.18c-5.49-2.29-8.6-4.58-10.4-8.05-1.82-3.53-2.35-8.4-2.35-16.04v-34.01c0-13.07,3.33-23.9,8.88-31.45,5.55-7.53,13.33-11.8,22.33-11.8s14.83,3.43,18.53,8.8c3.73,5.41,5.28,12.88,5.28,21.02v47.43c0,7.64-.53,12.51-2.35,16.04-1.79,3.48-4.9,5.77-10.4,8.05l-.44.18v1.65h48.16v-1.65l-.44-.18c-5.49-2.29-8.6-4.58-10.4-8.05v.02Z"/>
@@ -731,8 +753,10 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer with WebGL lake background -->
-    <div class="footer-scroll-spacer">
+    <footer class="footer-scroll-spacer">
         <div class="footer-sticky">
             <canvas id="footerCanvas"></canvas>
             <div class="footer-card" id="footerCard"></div>
@@ -745,7 +769,8 @@
                     </div>
                 </div>
                 <div class="footer-bottom">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1626.32 177.05" class="footer-logo" fill="#155EE8">
+                <p class="footer-legal">&copy; 2025 Sunshine Lake Capital. All rights reserved.</p>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1626.32 177.05" class="footer-logo" fill="#155EE8" aria-label="Sunshine Lake Capital" role="img">
           <g>
             <path d="M867.39,37.06c8.72,0,15.29-6.56,15.29-15.06s-6.57-15.06-15.29-15.06-15.29,6.56-15.29,15.06,6.57,15.06,15.29,15.06Z"/>
             <path d="M604.94,164.82c-1.82-3.53-2.35-8.4-2.35-16.04v-49.28c0-13.43-3.74-23.69-10.26-30.59-6.52-6.91-15.75-10.37-26.55-10.37-10.11,0-18.89,3.24-25.94,9.25-6.09,5.2-10.85,12.44-14.06,21.4v-28.34h-36.13v1.65l.44.18c5.45,2.27,8.89,5.07,10.99,8.85,2.11,3.8,2.92,8.69,2.92,15.24v62c0,7.64-.53,12.51-2.35,16.04-1.79,3.48-4.9,5.77-10.4,8.05l-.44.18v1.65h48.16v-1.65l-.44-.18c-5.49-2.29-8.6-4.58-10.4-8.05-1.82-3.53-2.35-8.4-2.35-16.04v-34.01c0-13.07,3.33-23.9,8.88-31.45,5.55-7.53,13.33-11.8,22.33-11.8s14.83,3.43,18.53,8.8c3.73,5.41,5.28,12.88,5.28,21.02v47.43c0,7.64-.53,12.51-2.35,16.04-1.79,3.48-4.9,5.77-10.4,8.05l-.44.18v1.65h48.16v-1.65l-.44-.18c-5.49-2.29-8.6-4.58-10.4-8.05v.02Z"/>
@@ -770,7 +795,7 @@
             </div>
             <img src="ewoks.png" alt="" class="footer-boat" loading="lazy">
         </div>
-    </div>
+    </footer>
 
     <!-- WebGL Shaders -->
     <script id="vertex-shader" type="x-shader/x-vertex">
@@ -961,6 +986,7 @@
         const heroSticky = document.querySelector('.hero-sticky');
         const heroCard = document.querySelector('.hero-card');
 
+        let heroLoaded = false;
         let currentScale = 1;
         let currentRadius = 0;
         let targetScale = 1;
@@ -1216,6 +1242,9 @@
             gl.uniform1f(locs.u_radial_ripple, baseRipple + (maxRipple - baseRipple) * shaderIntensity);
 
             gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            // Fade in hero after first frame
+            if (!heroLoaded) { heroCard.classList.add('loaded'); heroLoaded = true; }
         }
 
         // --- SINGLE unified rAF loop ---
@@ -1289,10 +1318,31 @@
             boatDirty = true;
         }, { passive: true });
 
+        // --- Touch support for boat + ripple ---
+        footerSticky.addEventListener('touchstart', (e) => {
+            boat.classList.add('visible');
+            const t = e.touches[0], rect = footerSticky.getBoundingClientRect();
+            boatMoveX = t.clientX - rect.left;
+            boatMoveY = t.clientY - rect.top;
+            boatDirty = true;
+            // Trigger ripple on tap
+            clickPos[0] = (t.clientX - rect.left) / rect.width;
+            clickPos[1] = 1.0 - (t.clientY - rect.top) / rect.height;
+            clickAge = 0.0;
+        }, { passive: true });
+        footerSticky.addEventListener('touchmove', (e) => {
+            const t = e.touches[0], rect = footerSticky.getBoundingClientRect();
+            const newX = t.clientX - rect.left;
+            if (Math.abs(newX - boatMoveX) > 1) boatFacingLeft = newX < boatMoveX;
+            boatMoveX = newX;
+            boatMoveY = t.clientY - rect.top;
+            boatDirty = true;
+        }, { passive: true });
+        footerSticky.addEventListener('touchend', () => boat.classList.remove('visible'), { passive: true });
+
         // --- Click ripple in footer (shader + card translucency) ---
         footerSticky.addEventListener('click', (e) => {
             const rect = footerSticky.getBoundingClientRect();
-            // Normalized 0-1 coords (y flipped for WebGL)
             clickPos[0] = (e.clientX - rect.left) / rect.width;
             clickPos[1] = 1.0 - (e.clientY - rect.top) / rect.height;
             clickAge = 0.0;
