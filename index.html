@@ -1524,19 +1524,16 @@
             fGl.uniform1f(fLocs.u_click_age, clickAge);
             fGl.drawArrays(fGl.TRIANGLES, 0, 6);
 
-            // Smooth card opacity + white text tied to ripple age
+            // Smooth card + content fade out/in tied to ripple age
             if (clickAge < 4.0) {
-                const fadeIn = Math.min(1, clickAge / 0.3);
-                const fadeOut = Math.max(0, 1 - (clickAge - 0.8) / 2.0);
-                const rippleOpacity = 1 - 0.2 * fadeIn * fadeOut;
+                const fadeIn = Math.min(1, clickAge / 0.4);
+                const fadeOut = Math.max(0, 1 - (clickAge - 1.5) / 2.0);
+                const rippleOpacity = 1 - fadeIn * fadeOut;
                 footerCard.style.opacity = rippleOpacity;
+                footerContentEl.style.opacity = rippleOpacity;
             } else {
                 footerCard.style.opacity = '';
-            }
-            if (clickAge < 2.0) {
-                if (!footerContentEl.classList.contains('ripple-active')) footerContentEl.classList.add('ripple-active');
-            } else {
-                if (footerContentEl.classList.contains('ripple-active')) footerContentEl.classList.remove('ripple-active');
+                footerContentEl.style.opacity = '';
             }
         }
     </script>
