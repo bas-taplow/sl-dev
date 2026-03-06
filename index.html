@@ -134,8 +134,8 @@
         .reveal-line {
             display: block;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .reveal-line.visible {
@@ -812,18 +812,26 @@
 
         // --- Line-by-line reveal on scroll ---
         const revealLines = document.querySelectorAll('.reveal-line');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.3 });
+        let revealTriggered = false;
 
-        revealLines.forEach((line, i) => {
-            line.style.transitionDelay = (i * 0.15) + 's';
-            revealObserver.observe(line);
-        });
+        function checkReveal() {
+            if (revealTriggered) return;
+            const section = document.querySelector('.content-section');
+            const rect = section.getBoundingClientRect();
+            const vh = window.innerHeight;
+            // Trigger when top of section is at 40% from top of viewport
+            if (rect.top < vh * 0.4) {
+                revealTriggered = true;
+                revealLines.forEach((line, i) => {
+                    setTimeout(() => {
+                        line.classList.add('visible');
+                    }, i * 200);
+                });
+            }
+        }
+
+        lenis.on('scroll', checkReveal);
+        checkReveal();
 
         // --- WebGL Setup ---
         const canvas = document.getElementById('glCanvas');
