@@ -86,9 +86,8 @@
         /* Main Content Overlay (Title) */
         .main-content {
             position: absolute;
-            top: 50%;
+            bottom: 0;
             left: clamp(20px, 4vw, 80px);
-            transform: translateY(-50%);
             z-index: 10;
             color: #ffffff;
             display: flex;
@@ -96,6 +95,7 @@
             align-items: flex-start;
             pointer-events: none;
             max-width: clamp(600px, 50vw, 1200px);
+            will-change: transform;
         }
 
         .title {
@@ -939,6 +939,13 @@
         let targetScale = 1;
         let targetRadius = 0;
 
+        // Title slide from center to bottom
+        const mainContent = document.querySelector('.main-content');
+        const initTitleY = window.innerHeight * 0.42;
+        let currentTitleY = initTitleY;
+        let targetTitleY = initTitleY;
+        mainContent.style.transform = `translateY(-${initTitleY}px)`;
+
         // Testimonials
         const testimonialsSpacer = document.querySelector('.testimonials-spacer');
         const testimonialsTrack = document.getElementById('testimonialsTrack');
@@ -984,6 +991,11 @@
             const minScale = Math.min(scaleX, scaleY);
             targetScale = 1 - progress * (1 - minScale);
             targetRadius = progress * (22 / minScale); // compensate for scale
+
+            // Title: slides from center to bottom of card
+            const titleStartY = vh * 0.42; // roughly centered
+            const titleEndY = Math.max(30, Math.min(vh * 0.04, 60)); // near bottom
+            targetTitleY = titleStartY - progress * (titleStartY - titleEndY);
 
             // Shader intensity over 0 → 200vh
             const totalHeroScroll = vh * 2.0;
@@ -1178,6 +1190,9 @@
             currentRadius += (targetRadius - currentRadius) * lerpFrame;
             heroCard.style.transform = `scale(${currentScale})`;
             heroCard.style.borderRadius = currentRadius + 'px';
+
+            currentTitleY += (targetTitleY - currentTitleY) * lerpFrame;
+            mainContent.style.transform = `translateY(-${currentTitleY}px)`;
 
             shaderIntensity += (targetShaderIntensity - shaderIntensity) * 0.04;
 
