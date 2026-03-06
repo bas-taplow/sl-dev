@@ -513,13 +513,7 @@
         }
         .footer-boat.visible { opacity: 0.85; }
 
-        /* Card translucency on click */
-        .footer-card {
-            transition: opacity 0.3s ease;
-        }
-        .footer-card.ripple-active {
-            opacity: 0.82;
-        }
+        /* Card translucency driven by JS */
 
         @media (max-width: 768px) {
             .logo-img { height: clamp(22px, 4vw, 32px); }
@@ -1288,9 +1282,6 @@
             clickPos[0] = (e.clientX - rect.left) / rect.width;
             clickPos[1] = 1.0 - (e.clientY - rect.top) / rect.height;
             clickAge = 0.0;
-            // Card translucency
-            footerCard.classList.add('ripple-active');
-            setTimeout(() => footerCard.classList.remove('ripple-active'), 1200);
         });
 
         // --- Footer WebGL Setup (second canvas, sunset lake config) ---
@@ -1384,6 +1375,16 @@
             fGl.uniform2f(fLocs.u_click_pos, clickPos[0], clickPos[1]);
             fGl.uniform1f(fLocs.u_click_age, clickAge);
             fGl.drawArrays(fGl.TRIANGLES, 0, 6);
+
+            // Smooth card opacity tied to ripple age
+            if (clickAge < 4.0) {
+                const fadeIn = Math.min(1, clickAge / 0.3);
+                const fadeOut = Math.max(0, 1 - (clickAge - 0.8) / 2.0);
+                const rippleOpacity = 1 - 0.2 * fadeIn * fadeOut;
+                footerCard.style.opacity = rippleOpacity;
+            } else {
+                footerCard.style.opacity = '';
+            }
         }
     </script>
 </body>
