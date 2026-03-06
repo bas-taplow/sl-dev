@@ -512,7 +512,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-photo duotone" style="background-image: url('kalshi.png');"></div>
+                    <div class="card-photo duotone" style="background-image: url('kalshi.jpg');"></div>
                 </div>
             </div>
         </div>
@@ -779,35 +779,6 @@
             targetTrackX = -scrollProgress * maxTranslate;
         }
 
-        // Single unified animation loop — all lerps in one rAF
-        function animate() {
-            const lerpFrame = 0.065;
-            const lerpShader = 0.04;
-            const lerpBg = 0.08;
-            const lerpTrack = 0.06;
-
-            // Frame (GPU: transform + border-radius)
-            currentScale += (targetScale - currentScale) * lerpFrame;
-            currentRadius += (targetRadius - currentRadius) * lerpFrame;
-            heroCard.style.transform = `scale(${currentScale})`;
-            heroCard.style.borderRadius = currentRadius + 'px';
-
-            // Shader
-            shaderIntensity += (targetShaderIntensity - shaderIntensity) * lerpShader;
-
-            // Background color
-            currentBgR += (targetBgR - currentBgR) * lerpBg;
-            currentBgG += (targetBgG - currentBgG) * lerpBg;
-            currentBgB += (targetBgB - currentBgB) * lerpBg;
-            testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
-
-            // Horizontal track (GPU: translateX)
-            currentTrackX += (targetTrackX - currentTrackX) * lerpTrack;
-            testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
-
-            requestAnimationFrame(animate);
-        }
-
         // Lenis smooth scroll
         const lenis = new Lenis({
             lerp: 0.07,
@@ -815,14 +786,8 @@
             wheelMultiplier: 0.8
         });
         lenis.on('scroll', updateTargets);
-        function lenisRaf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(lenisRaf);
-        }
-        requestAnimationFrame(lenisRaf);
 
         updateTargets();
-        animate();
 
         // --- Line-by-line reveal tied to scroll within content spacer ---
         const contentSpacer = document.querySelector('.content-spacer');
@@ -855,7 +820,7 @@
 
         // --- WebGL Setup ---
         const canvas = document.getElementById('glCanvas');
-        const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true, alpha: false });
+        const gl = canvas.getContext('webgl', { alpha: false });
         gl.getExtension('OES_standard_derivatives');
 
         function createShader(gl, type, source) {
@@ -912,6 +877,38 @@
         window.addEventListener('resize', resize);
         resize();
 
+        // --- Set STATIC uniforms once (these never change per frame) ---
+        gl.uniform3fv(locs.u_c1, hex2rgb(getVal('c1', '#edece3')));
+        gl.uniform3fv(locs.u_c2, hex2rgb(getVal('c2', '#f2d831')));
+        gl.uniform3fv(locs.u_c3, hex2rgb(getVal('c3', '#7accff')));
+        gl.uniform3fv(locs.u_c4, hex2rgb(getVal('c4', '#0032a8')));
+        gl.uniform3fv(locs.u_c5, hex2rgb(getVal('c5', '#0b1275')));
+        gl.uniform1f(locs.u_color_softness, parseFloat(getVal('colorSoftness', '0.32')));
+        gl.uniform1f(locs.u_zoom, parseFloat(getVal('zoom', '2.6')));
+        gl.uniform1f(locs.u_flow_angle, parseFloat(getVal('flowAngle', '45')) * (Math.PI/180));
+        gl.uniform1f(locs.u_directional, parseFloat(getVal('directional', '0.97')));
+        const dp = getVal('dropPosition', '0.5,0.5').split(',').map(Number);
+        gl.uniform2f(locs.u_drop_pos, dp[0], dp[1]);
+        gl.uniform1f(locs.u_wave_stretch, parseFloat(getVal('waveStretch', '2.2')));
+        gl.uniform1f(locs.u_scatter, parseFloat(getVal('scatter', '0.0')));
+        gl.uniform1f(locs.u_contrast, parseFloat(getVal('contrast', '1.06')));
+        const sp = getVal('sunPos', '0.5,0.5').split(',').map(Number);
+        gl.uniform2f(locs.u_sun_pos, sp[0], sp[1]);
+        gl.uniform1f(locs.u_sun_int, parseFloat(getVal('sunInt', '1.7')));
+        gl.uniform1f(locs.u_sun_size, parseFloat(getVal('sunSize', '0.0')));
+        gl.uniform1f(locs.u_sun_glitter, parseFloat(getVal('sunGlitter', '0.11')));
+        gl.uniform1f(locs.u_sun_glitter_density, parseFloat(getVal('sunGlitterDensity', '0.96')));
+        gl.uniform1f(locs.u_sun_glitter_size, parseFloat(getVal('sunGlitterSize', '1.0')));
+        gl.uniform1f(locs.u_sun_streak, parseFloat(getVal('sunStreak', '0.0')));
+        gl.uniform1f(locs.u_sun_flare, parseFloat(getVal('sunFlare', '0.0')));
+        gl.uniform1f(locs.u_sun_warp, parseFloat(getVal('sunWarp', '1.0')));
+        gl.uniform1f(locs.u_sun_edge_glow, parseFloat(getVal('sunEdgeGlow', '0.5')));
+
+        // Shader intensity constants
+        const baseSpeed = 0.06, maxSpeed = 0.18;
+        const baseDistortion = 1.8, maxDistortion = 3.5;
+        const baseRipple = 0.25, maxRipple = 1.4;
+
         let globalTime = 0;
         let lastTime = performance.now();
 
@@ -919,54 +916,48 @@
             globalTime += (now - lastTime);
             lastTime = now;
 
+            // Only DYNAMIC uniforms updated per frame
             gl.uniform2f(locs.u_resolution, canvas.width, canvas.height);
             gl.uniform1f(locs.u_time, globalTime * 0.001);
-
-            gl.uniform3fv(locs.u_c1, hex2rgb(getVal('c1', '#edece3')));
-            gl.uniform3fv(locs.u_c2, hex2rgb(getVal('c2', '#f2d831')));
-            gl.uniform3fv(locs.u_c3, hex2rgb(getVal('c3', '#7accff')));
-            gl.uniform3fv(locs.u_c4, hex2rgb(getVal('c4', '#0032a8')));
-            gl.uniform3fv(locs.u_c5, hex2rgb(getVal('c5', '#0b1275')));
-            gl.uniform1f(locs.u_color_softness, parseFloat(getVal('colorSoftness', '0.32')));
-
-            // Shader intensity: gentle ripple at rest, intense water on scroll
-            const baseSpeed = 0.06;
-            const maxSpeed = 0.18;
-            const baseDistortion = 1.8;
-            const maxDistortion = 3.5;
-            const baseRipple = 0.25;
-            const maxRipple = 1.4;
-
             gl.uniform1f(locs.u_speed, baseSpeed + (maxSpeed - baseSpeed) * shaderIntensity);
             gl.uniform1f(locs.u_distortion, baseDistortion + (maxDistortion - baseDistortion) * shaderIntensity);
-            gl.uniform1f(locs.u_zoom, parseFloat(getVal('zoom', '2.6')));
-            gl.uniform1f(locs.u_flow_angle, parseFloat(getVal('flowAngle', '45')) * (Math.PI/180));
-            gl.uniform1f(locs.u_directional, parseFloat(getVal('directional', '0.97')));
             gl.uniform1f(locs.u_radial_ripple, baseRipple + (maxRipple - baseRipple) * shaderIntensity);
 
-            const dp = getVal('dropPosition', '0.5,0.5').split(',').map(Number);
-            gl.uniform2f(locs.u_drop_pos, dp[0], dp[1]);
-            gl.uniform1f(locs.u_wave_stretch, parseFloat(getVal('waveStretch', '2.2')));
-            gl.uniform1f(locs.u_scatter, parseFloat(getVal('scatter', '0.0')));
-            gl.uniform1f(locs.u_contrast, parseFloat(getVal('contrast', '1.06')));
-
-            const sp = getVal('sunPos', '0.5,0.5').split(',').map(Number);
-            gl.uniform2f(locs.u_sun_pos, sp[0], sp[1]);
-            gl.uniform1f(locs.u_sun_int, parseFloat(getVal('sunInt', '1.7')));
-            gl.uniform1f(locs.u_sun_size, parseFloat(getVal('sunSize', '0.0')));
-            gl.uniform1f(locs.u_sun_glitter, parseFloat(getVal('sunGlitter', '0.11')));
-            gl.uniform1f(locs.u_sun_glitter_density, parseFloat(getVal('sunGlitterDensity', '0.96')));
-            gl.uniform1f(locs.u_sun_glitter_size, parseFloat(getVal('sunGlitterSize', '1.0')));
-            gl.uniform1f(locs.u_sun_streak, parseFloat(getVal('sunStreak', '0.0')));
-            gl.uniform1f(locs.u_sun_flare, parseFloat(getVal('sunFlare', '0.0')));
-            gl.uniform1f(locs.u_sun_warp, parseFloat(getVal('sunWarp', '1.0')));
-            gl.uniform1f(locs.u_sun_edge_glow, parseFloat(getVal('sunEdgeGlow', '0.5')));
-
             gl.drawArrays(gl.TRIANGLES, 0, 6);
-            requestAnimationFrame(render);
         }
 
-        requestAnimationFrame(render);
+        // --- SINGLE unified rAF loop (replaces 3 separate loops) ---
+        let heroVisible = true;
+        function tick(now) {
+            // Lenis
+            lenis.raf(now);
+
+            // Lerps
+            const lerpFrame = 0.065;
+            currentScale += (targetScale - currentScale) * lerpFrame;
+            currentRadius += (targetRadius - currentRadius) * lerpFrame;
+            heroCard.style.transform = `scale(${currentScale})`;
+            heroCard.style.borderRadius = currentRadius + 'px';
+
+            shaderIntensity += (targetShaderIntensity - shaderIntensity) * 0.04;
+
+            currentBgR += (targetBgR - currentBgR) * 0.08;
+            currentBgG += (targetBgG - currentBgG) * 0.08;
+            currentBgB += (targetBgB - currentBgB) * 0.08;
+            testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
+
+            currentTrackX += (targetTrackX - currentTrackX) * 0.06;
+            testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
+
+            // WebGL — only render when hero is visible
+            heroVisible = heroCard.getBoundingClientRect().bottom > 0;
+            if (heroVisible) {
+                render(now);
+            }
+
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
     </script>
 </body>
 </html>
