@@ -402,37 +402,45 @@
             font-weight: 400;
         }
 
-        /* Footer — reverse scroll frame effect */
+        /* Footer — card over WebGL lake */
         .footer-scroll-spacer {
-            height: 200vh;
+            height: 100vh;
             position: relative;
             z-index: 2;
-            background: #155EE8;
         }
 
         .footer-sticky {
-            position: sticky;
-            top: 0;
+            position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        #footerCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         .footer-card {
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            overflow: hidden;
             position: relative;
-            will-change: transform, border-radius;
-            transform-origin: center center;
+            z-index: 1;
+            width: clamp(340px, 50vw, 700px);
+            height: clamp(300px, 45vh, 500px);
+            background: #fff;
+            border-radius: 22px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: clamp(80px, 8vw, 160px) clamp(20px, 4vw, 80px) clamp(60px, 5vw, 100px);
+            padding: clamp(40px, 4vw, 80px) clamp(30px, 3vw, 60px);
         }
 
         .footer-main {
@@ -674,9 +682,10 @@
         </div>
     </section>
 
-    <!-- Footer with reverse scroll frame effect -->
+    <!-- Footer with WebGL lake background -->
     <div class="footer-scroll-spacer">
         <div class="footer-sticky">
+            <canvas id="footerCanvas"></canvas>
             <div class="footer-card" id="footerCard">
                 <div class="footer-main">
                     <h2 class="footer-title">Get in Touch</h2>
@@ -894,13 +903,8 @@
         let currentBgR = 255, currentBgG = 255, currentBgB = 255;
         let targetBgR = 255, targetBgG = 255, targetBgB = 255;
 
-        // Footer — reverse frame effect
+        // Footer
         const footerSpacer = document.querySelector('.footer-scroll-spacer');
-        const footerCard = document.getElementById('footerCard');
-        let currentFooterScale = 1;
-        let currentFooterRadius = 0;
-        let targetFooterScale = 1;
-        let targetFooterRadius = 0;
 
         function updateTargets() {
             const scrollY = window.scrollY;
@@ -939,18 +943,6 @@
             const viewWidth = window.innerWidth;
             const maxTranslate = trackWidth - viewWidth + 120;
             targetTrackX = -scrollProgress * maxTranslate;
-
-            // Footer — reverse frame (white card shrinks to reveal blue)
-            const footerRect = footerSpacer.getBoundingClientRect();
-            const footerScrollInto = -footerRect.top;
-            const footerTotalScroll = footerSpacer.offsetHeight - vh;
-            const footerProgress = Math.max(0, Math.min(1, footerScrollInto / (vh * 1.0)));
-            const fMaxInset = 80;
-            const fScaleX = 1 - (fMaxInset * 2) / window.innerWidth;
-            const fScaleY = 1 - (fMaxInset * 2) / vh;
-            const fMinScale = Math.min(fScaleX, fScaleY);
-            targetFooterScale = 1 - footerProgress * (1 - fMinScale);
-            targetFooterRadius = footerProgress * (22 / fMinScale);
         }
 
         // Lenis smooth scroll
@@ -1123,21 +1115,103 @@
             currentTrackX += (targetTrackX - currentTrackX) * 0.06;
             testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
 
-            // Footer card lerps
-            currentFooterScale += (targetFooterScale - currentFooterScale) * lerpFrame;
-            currentFooterRadius += (targetFooterRadius - currentFooterRadius) * lerpFrame;
-            footerCard.style.transform = `scale(${currentFooterScale})`;
-            footerCard.style.borderRadius = currentFooterRadius + 'px';
-
             // WebGL — only render when hero is visible
             heroVisible = heroCard.getBoundingClientRect().bottom > 0;
             if (heroVisible) {
                 render(now);
             }
 
+            // Footer WebGL — only render when footer is in viewport
+            const footerRect = footerSpacer.getBoundingClientRect();
+            if (footerRect.top < window.innerHeight && footerRect.bottom > 0) {
+                renderFooter(now);
+            }
+
             requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
+
+        // --- Footer WebGL Setup (second canvas, sunset lake config) ---
+        const footerConfigString = "eyJjMSI6IiNmZmZmZmYiLCJjMiI6IiM4YzE0OWEiLCJjMyI6IiNhN2I4ZjciLCJjNCI6IiNkYjRkNmMiLCJjNSI6IiM3MTA0MDgiLCJjb2xvclNvZnRuZXNzIjoiMC4zMiIsImRpc3RvcnRpb24iOiI0Iiwic3BlZWQiOiIwLjEiLCJmbG93QW5nbGUiOiIzNjAiLCJkaXJlY3Rpb25hbCI6IjEiLCJyYWRpYWxSaXBwbGUiOiIxIiwiZHJvcFBvc2l0aW9uIjoiMC44LDAuOCIsIndhdmVTdHJldGNoIjoiMS45Iiwiem9vbSI6IjEuNyIsInNjYXR0ZXIiOiIwIiwiY29udHJhc3QiOiIxLjA2Iiwic3VuUG9zIjoiMC41LDAuMiIsInN1bkludCI6IjcuOCIsInN1blNpemUiOiIwLjE4Iiwic3VuR2xpdHRlciI6IjAuMDciLCJzdW5HbGl0dGVyRGVuc2l0eSI6IjAuOSIsInN1bkdsaXR0ZXJTaXplIjoiMC45Iiwic3VuV2FycCI6IjEiLCJzdW5TdHJlYWsiOiIwIiwic3VuRWRnZUdsb3ciOiIwLjQ2Iiwic3VuRmxhcmUiOiIwIiwiYXNwZWN0UmF0aW8iOiIxNjo5In0";
+        let fConfig = {};
+        try { fConfig = JSON.parse(atob(footerConfigString)); } catch(e) {}
+        const fGetVal = (key, fallback) => fConfig[key] !== undefined ? fConfig[key] : fallback;
+
+        const fCanvas = document.getElementById('footerCanvas');
+        const fGl = fCanvas.getContext('webgl', { alpha: false });
+        fGl.getExtension('OES_standard_derivatives');
+
+        const fProgram = fGl.createProgram();
+        fGl.attachShader(fProgram, createShader(fGl, fGl.VERTEX_SHADER, document.getElementById('vertex-shader').text));
+        fGl.attachShader(fProgram, createShader(fGl, fGl.FRAGMENT_SHADER, document.getElementById('fragment-shader').text));
+        fGl.linkProgram(fProgram);
+
+        const fPosLoc = fGl.getAttribLocation(fProgram, 'a_position');
+        const fBuf = fGl.createBuffer();
+        fGl.bindBuffer(fGl.ARRAY_BUFFER, fBuf);
+        fGl.bufferData(fGl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), fGl.STATIC_DRAW);
+        fGl.enableVertexAttribArray(fPosLoc);
+        fGl.vertexAttribPointer(fPosLoc, 2, fGl.FLOAT, false, 0, 0);
+        fGl.useProgram(fProgram);
+
+        // Footer uniform locations
+        const fLocs = {};
+        ['u_resolution','u_time','u_c1','u_c2','u_c3','u_c4','u_c5','u_color_softness',
+         'u_speed','u_distortion','u_zoom','u_flow_angle','u_directional','u_radial_ripple',
+         'u_drop_pos','u_wave_stretch','u_scatter','u_contrast',
+         'u_sun_pos','u_sun_int','u_sun_size','u_sun_glitter','u_sun_glitter_density',
+         'u_sun_glitter_size','u_sun_streak','u_sun_flare','u_sun_warp','u_sun_edge_glow'
+        ].forEach(name => { fLocs[name] = fGl.getUniformLocation(fProgram, name); });
+
+        // Set footer static uniforms once
+        fGl.uniform3fv(fLocs.u_c1, hex2rgb(fGetVal('c1', '#ffffff')));
+        fGl.uniform3fv(fLocs.u_c2, hex2rgb(fGetVal('c2', '#8c149a')));
+        fGl.uniform3fv(fLocs.u_c3, hex2rgb(fGetVal('c3', '#a7b8f7')));
+        fGl.uniform3fv(fLocs.u_c4, hex2rgb(fGetVal('c4', '#db4d6c')));
+        fGl.uniform3fv(fLocs.u_c5, hex2rgb(fGetVal('c5', '#710408')));
+        fGl.uniform1f(fLocs.u_color_softness, parseFloat(fGetVal('colorSoftness', '0.32')));
+        fGl.uniform1f(fLocs.u_zoom, parseFloat(fGetVal('zoom', '1.7')));
+        fGl.uniform1f(fLocs.u_flow_angle, parseFloat(fGetVal('flowAngle', '360')) * (Math.PI/180));
+        fGl.uniform1f(fLocs.u_directional, parseFloat(fGetVal('directional', '1')));
+        const fDp = fGetVal('dropPosition', '0.8,0.8').split(',').map(Number);
+        fGl.uniform2f(fLocs.u_drop_pos, fDp[0], fDp[1]);
+        fGl.uniform1f(fLocs.u_wave_stretch, parseFloat(fGetVal('waveStretch', '1.9')));
+        fGl.uniform1f(fLocs.u_scatter, parseFloat(fGetVal('scatter', '0')));
+        fGl.uniform1f(fLocs.u_contrast, parseFloat(fGetVal('contrast', '1.06')));
+        const fSp = fGetVal('sunPos', '0.5,0.2').split(',').map(Number);
+        fGl.uniform2f(fLocs.u_sun_pos, fSp[0], fSp[1]);
+        fGl.uniform1f(fLocs.u_sun_int, parseFloat(fGetVal('sunInt', '7.8')));
+        fGl.uniform1f(fLocs.u_sun_size, parseFloat(fGetVal('sunSize', '0.18')));
+        fGl.uniform1f(fLocs.u_sun_glitter, parseFloat(fGetVal('sunGlitter', '0.07')));
+        fGl.uniform1f(fLocs.u_sun_glitter_density, parseFloat(fGetVal('sunGlitterDensity', '0.9')));
+        fGl.uniform1f(fLocs.u_sun_glitter_size, parseFloat(fGetVal('sunGlitterSize', '0.9')));
+        fGl.uniform1f(fLocs.u_sun_streak, parseFloat(fGetVal('sunStreak', '0')));
+        fGl.uniform1f(fLocs.u_sun_flare, parseFloat(fGetVal('sunFlare', '0')));
+        fGl.uniform1f(fLocs.u_sun_warp, parseFloat(fGetVal('sunWarp', '1')));
+        fGl.uniform1f(fLocs.u_sun_edge_glow, parseFloat(fGetVal('sunEdgeGlow', '0.46')));
+        fGl.uniform1f(fLocs.u_speed, parseFloat(fGetVal('speed', '0.1')));
+        fGl.uniform1f(fLocs.u_distortion, parseFloat(fGetVal('distortion', '4')));
+        fGl.uniform1f(fLocs.u_radial_ripple, parseFloat(fGetVal('radialRipple', '1')));
+
+        // Footer canvas resize
+        function resizeFooter() {
+            fCanvas.width = Math.floor(fCanvas.clientWidth * renderDpr);
+            fCanvas.height = Math.floor(fCanvas.clientHeight * renderDpr);
+            fGl.viewport(0, 0, fCanvas.width, fCanvas.height);
+        }
+        window.addEventListener('resize', resizeFooter);
+        resizeFooter();
+
+        let footerTime = 0;
+        let footerLastTime = performance.now();
+
+        function renderFooter(now) {
+            footerTime += (now - footerLastTime);
+            footerLastTime = now;
+            fGl.uniform2f(fLocs.u_resolution, fCanvas.width, fCanvas.height);
+            fGl.uniform1f(fLocs.u_time, footerTime * 0.001);
+            fGl.drawArrays(fGl.TRIANGLES, 0, 6);
+        }
     </script>
 </body>
 </html>
