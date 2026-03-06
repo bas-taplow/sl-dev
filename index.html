@@ -219,15 +219,13 @@
             background: #ddd;
             background-size: cover;
             background-position: center;
-            filter: grayscale(100%) brightness(0.9);
-            mix-blend-mode: normal;
             position: relative;
         }
 
-        .portfolio-card .card-photo.blue-mono {
-            background-blend-mode: color;
+        .portfolio-card .card-photo.duotone {
             background-color: #155EE8;
-            filter: none;
+            background-blend-mode: luminosity;
+            filter: contrast(1.1) brightness(1.1);
         }
 
         .portfolio-card .card-header {
@@ -507,7 +505,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-photo blue-mono" style="background-image: url('kalshi.png');"></div>
+                    <div class="card-photo duotone" style="background-image: url('kalshi.png');"></div>
                 </div>
             </div>
         </div>
