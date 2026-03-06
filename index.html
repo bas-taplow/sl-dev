@@ -80,7 +80,7 @@
             width: auto;
             aspect-ratio: 1626 / 177;
             display: block;
-            filter: drop-shadow(0 1px 4px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
         }
 
         /* Main Content Overlay (Title) */
@@ -104,24 +104,31 @@
             font-weight: 400;
             line-height: 1.1;
             margin: 0;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.3);
         }
 
-        /* Content section — large centered text */
-        .content-section {
+        /* Content section — sticky with scroll-driven line reveal */
+        .content-spacer {
+            height: 250vh;
             position: relative;
             z-index: 2;
             background: #ffffff;
-            min-height: 100vh;
+        }
+
+        .content-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 120px 60px;
             text-align: center;
+            background: #ffffff;
         }
 
-        .content-section p {
+        .content-sticky p {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: 2.4rem;
             line-height: 1.6;
@@ -234,14 +241,14 @@
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: 2.4rem;
             font-weight: 400;
-            color: #111;
+            color: #155EE8;
             margin: 0;
             line-height: 1.1;
         }
 
         .portfolio-card .founders {
             font-size: 0.85rem;
-            color: #888;
+            color: rgba(21, 94, 232, 0.5);
             letter-spacing: 0.03em;
             margin: 8px 0 0 0;
         }
@@ -250,7 +257,7 @@
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: 1.25rem;
             line-height: 1.45;
-            color: #333;
+            color: #155EE8;
             margin: 0;
             flex: 1;
             display: flex;
@@ -261,21 +268,21 @@
             display: flex;
             gap: 30px;
             padding-top: 24px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid rgba(21, 94, 232, 0.15);
         }
 
         .portfolio-card .metric-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #aaa;
+            color: rgba(21, 94, 232, 0.45);
             margin-bottom: 4px;
         }
 
         .portfolio-card .metric-value {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: 1.6rem;
-            color: #111;
+            color: #155EE8;
             font-weight: 400;
         }
 
@@ -365,8 +372,8 @@
             .logo-container { top: 20px; left: 20px; }
             .title { font-size: 3rem; }
             .logo-img { height: 18px; }
-            .content-section { padding: 80px 20px; }
-            .content-section p { font-size: 1.4rem; }
+            .content-sticky { padding: 80px 20px; }
+            .content-sticky p { font-size: 1.4rem; }
             .section-intro { width: 280px; }
             .section-title { font-size: 2.4rem; }
             .section-subtitle { font-size: 1rem; }
@@ -440,16 +447,18 @@
         </div>
     </div>
 
-    <!-- Content below hero -->
-    <section class="content-section">
-        <p>
-            <span class="reveal-line">The next generation of iconic companies</span>
-            <span class="reveal-line">is being built by founders shaped by global</span>
-            <span class="reveal-line">experience and uncommon beginnings.</span>
-            <span class="reveal-line">Those journeys forge resilience,</span>
-            <span class="reveal-line">ambition, and perspective.</span>
-        </p>
-    </section>
+    <!-- Content below hero — sticky with scroll-driven reveal -->
+    <div class="content-spacer">
+        <div class="content-sticky">
+            <p>
+                <span class="reveal-line">The next generation of iconic companies</span>
+                <span class="reveal-line">is being built by founders shaped by global</span>
+                <span class="reveal-line">experience and uncommon beginnings.</span>
+                <span class="reveal-line">Those journeys forge resilience,</span>
+                <span class="reveal-line">ambition, and perspective.</span>
+            </p>
+        </div>
+    </div>
 
     <!-- Horizontal scrolling testimonials -->
     <div class="testimonials-spacer">
@@ -829,24 +838,30 @@
         updateTargets();
         animate();
 
-        // --- Line-by-line reveal on scroll ---
+        // --- Line-by-line reveal tied to scroll within content spacer ---
+        const contentSpacer = document.querySelector('.content-spacer');
         const revealLines = document.querySelectorAll('.reveal-line');
-        let revealTriggered = false;
+        const totalLines = revealLines.length;
 
         function checkReveal() {
-            if (revealTriggered) return;
-            const section = document.querySelector('.content-section');
-            const rect = section.getBoundingClientRect();
+            const rect = contentSpacer.getBoundingClientRect();
             const vh = window.innerHeight;
-            // Trigger when top of section is at 40% from top of viewport
-            if (rect.top < vh * 0.4) {
-                revealTriggered = true;
-                revealLines.forEach((line, i) => {
-                    setTimeout(() => {
-                        line.classList.add('visible');
-                    }, i * 200);
-                });
-            }
+            const scrollInto = -rect.top;
+            const totalScroll = contentSpacer.offsetHeight - vh;
+
+            // Lines reveal between 20%–70% of spacer scroll
+            const startAt = 0.2;
+            const endAt = 0.7;
+            const progress = Math.max(0, Math.min(1, scrollInto / totalScroll));
+
+            revealLines.forEach((line, i) => {
+                const lineStart = startAt + (endAt - startAt) * (i / totalLines);
+                if (progress >= lineStart) {
+                    line.classList.add('visible');
+                } else {
+                    line.classList.remove('visible');
+                }
+            });
         }
 
         lenis.on('scroll', checkReveal);
