@@ -495,6 +495,14 @@
             background: #fff;
             padding: clamp(40px, 5vw, 80px) clamp(20px, 4vw, 80px);
         }
+        .founders-grid-title {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(2.8rem, 3.8vw, 5.5rem);
+            font-weight: 400;
+            color: #155EE8;
+            max-width: 1400px;
+            margin: 0 auto clamp(24px, 2.5vw, 48px);
+        }
         .founders-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -509,6 +517,7 @@
             padding: clamp(20px, 2vw, 36px);
             background: #f0f4fb;
             aspect-ratio: 1 / 1;
+            border-radius: clamp(12px, 1.2vw, 20px);
             cursor: pointer;
             transition: background 0.3s ease;
         }
@@ -784,6 +793,7 @@
 
     <!-- Founders grid -->
     <div class="founders-grid-section">
+        <h2 class="founders-grid-title">Companies</h2>
         <div class="founders-grid">
             <div class="founder-tile">
                 <div class="founder-tile-top">
