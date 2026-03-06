@@ -537,8 +537,8 @@
         /* Footer ripple: text + logo turn white */
         .footer-title,
         .footer-legal,
-        .footer-logo { transition: color 0.4s ease, fill 0.4s ease; }
-        .footer-contact a { transition: color 0.4s ease; }
+        .footer-logo { transition: color 0.3s ease, fill 0.3s ease; }
+        .footer-contact a { transition: color 0.3s ease; }
         .footer-content.ripple-active .footer-title,
         .footer-content.ripple-active .footer-contact a,
         .footer-content.ripple-active .footer-legal { color: #fff; }
@@ -1457,9 +1457,12 @@
                 const fadeOut = Math.max(0, 1 - (clickAge - 0.8) / 2.0);
                 const rippleOpacity = 1 - 0.2 * fadeIn * fadeOut;
                 footerCard.style.opacity = rippleOpacity;
-                if (!footerContentEl.classList.contains('ripple-active')) footerContentEl.classList.add('ripple-active');
             } else {
                 footerCard.style.opacity = '';
+            }
+            if (clickAge < 2.0) {
+                if (!footerContentEl.classList.contains('ripple-active')) footerContentEl.classList.add('ripple-active');
+            } else {
                 if (footerContentEl.classList.contains('ripple-active')) footerContentEl.classList.remove('ripple-active');
             }
         }
