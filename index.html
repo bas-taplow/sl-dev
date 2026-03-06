@@ -223,9 +223,7 @@
         }
 
         .portfolio-card .card-photo.duotone {
-            background-color: #155EE8;
-            background-blend-mode: luminosity;
-            filter: contrast(1.1) brightness(1.1);
+            filter: url(#duotone-blue);
         }
 
         .portfolio-card .card-header {
@@ -385,6 +383,20 @@
     </style>
 </head>
 <body>
+
+    <!-- SVG duotone filter: shadows → #155EE8, highlights → white -->
+    <svg style="position:absolute;width:0;height:0;">
+        <defs>
+            <filter id="duotone-blue" color-interpolation-filters="sRGB">
+                <feColorMatrix type="saturate" values="0"/>
+                <feComponentTransfer>
+                    <feFuncR type="table" tableValues="0.082 1"/>
+                    <feFuncG type="table" tableValues="0.369 1"/>
+                    <feFuncB type="table" tableValues="0.910 1"/>
+                </feComponentTransfer>
+            </filter>
+        </defs>
+    </svg>
 
     <!-- Hero with scroll-driven frame effect -->
     <div class="hero-scroll-spacer">
