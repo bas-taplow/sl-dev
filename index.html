@@ -1210,38 +1210,23 @@
         // --- Easter egg: boat follows mouse in footer ---
         const boat = document.querySelector('.footer-boat');
         const footerSticky = document.querySelector('.footer-sticky');
-        let boatX = window.innerWidth / 2;
-        let boatY = window.innerHeight * 0.75;
-        let boatTargetX = boatX;
-        let boatTargetY = boatY;
         let boatFacingLeft = false;
-        let boatInFooter = false;
+        let lastMouseX = 0;
 
-        footerSticky.addEventListener('mouseenter', () => {
-            boatInFooter = true;
-            boat.classList.add('visible');
-        });
-        footerSticky.addEventListener('mouseleave', () => {
-            boatInFooter = false;
-            boat.classList.remove('visible');
-        });
+        footerSticky.addEventListener('mouseenter', () => boat.classList.add('visible'));
+        footerSticky.addEventListener('mouseleave', () => boat.classList.remove('visible'));
         footerSticky.addEventListener('mousemove', (e) => {
             const rect = footerSticky.getBoundingClientRect();
-            boatTargetX = e.clientX - rect.left;
-            boatTargetY = e.clientY - rect.top;
-        });
-
-        function tickBoat() {
-            const dx = boatTargetX - boatX;
-            const dy = boatTargetY - boatY;
-            boatX = boatTargetX;
-            boatY = boatTargetY;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const dx = e.clientX - lastMouseX;
+            lastMouseX = e.clientX;
             if (Math.abs(dx) > 1) boatFacingLeft = dx < 0;
-            const flip = boatFacingLeft ? 'scaleX(-1)' : 'scaleX(1)';
-            boat.style.transform = `translate(${boatX - boat.offsetWidth / 2}px, ${boatY - boat.offsetHeight / 2}px) ${flip}`;
-            requestAnimationFrame(tickBoat);
-        }
-        requestAnimationFrame(tickBoat);
+            const flip = boatFacingLeft ? ' scaleX(-1)' : '';
+            boat.style.left = x + 'px';
+            boat.style.top = y + 'px';
+            boat.style.transform = 'translate(-50%, -50%)' + flip;
+        });
 
         // --- Footer WebGL Setup (second canvas, sunset lake config) ---
         const footerConfigString = "eyJjMSI6IiNmZmZmZmYiLCJjMiI6IiM4YzE0OWEiLCJjMyI6IiNhN2I4ZjciLCJjNCI6IiNkYjRkNmMiLCJjNSI6IiM3MTA0MDgiLCJjb2xvclNvZnRuZXNzIjoiMC4zMiIsImRpc3RvcnRpb24iOiIzLjIiLCJzcGVlZCI6IjAuMSIsImZsb3dBbmdsZSI6IjQ1IiwiZGlyZWN0aW9uYWwiOiIwLjk3IiwicmFkaWFsUmlwcGxlIjoiMSIsImRyb3BQb3NpdGlvbiI6IjAuMTYsMC43OCIsIndhdmVTdHJldGNoIjoiMi4yIiwiem9vbSI6IjIuNiIsInNjYXR0ZXIiOiIwIiwiY29udHJhc3QiOiIxLjA2Iiwic3VuUG9zIjoiMC41LDAuNSIsInN1bkludCI6IjEuNyIsInN1blNpemUiOiIwIiwic3VuR2xpdHRlciI6IjAuMTEiLCJzdW5HbGl0dGVyRGVuc2l0eSI6IjAuOTYiLCJzdW5HbGl0dGVyU2l6ZSI6IjEiLCJzdW5XYXJwIjoiMSIsInN1blN0cmVhayI6IjAiLCJzdW5FZGdlR2xvdyI6IjAuNSIsInN1bkZsYXJlIjoiMCIsImFzcGVjdFJhdGlvIjoiNjo0In0=";
