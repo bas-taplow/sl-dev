@@ -356,12 +356,20 @@
             line-height: 1.1;
         }
 
+        .about-subtitle {
+            font-size: clamp(0.85rem, 0.95vw, 1.15rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(21, 94, 232, 0.5);
+            margin: 0 0 clamp(24px, 2.5vw, 48px) 0;
+        }
+
         .about-text {
             font-size: clamp(0.95rem, 1.1vw, 1.35rem);
             line-height: 1.7;
             color: #155EE8;
             margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
-            max-width: 540px;
+            max-width: 75%;
         }
 
         .about-specs {
@@ -375,7 +383,6 @@
             justify-content: space-between;
             padding: clamp(12px, 1vw, 20px) 0;
             border-bottom: 1px solid rgba(21, 94, 232, 0.12);
-            max-width: 540px;
         }
 
         .about-specs li:first-child {
@@ -621,21 +628,18 @@
                 </li>
                 <li>
                     <span class="spec-label">Geography</span>
-                    <span class="spec-value">US & Europe</span>
+                    <span class="spec-value">Global</span>
                 </li>
                 <li>
                     <span class="spec-label">Sectors</span>
                     <span class="spec-value">Sector Agnostic</span>
-                </li>
-                <li>
-                    <span class="spec-label">Portfolio</span>
-                    <span class="spec-value">20+ Companies</span>
                 </li>
             </ul>
         </div>
         <div class="about-divider"></div>
         <div class="about-col">
             <h2 class="about-title">Don Stalter</h2>
+            <p class="about-subtitle">General Partner</p>
             <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
             <p class="about-text">Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.</p>
         </div>
