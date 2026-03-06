@@ -518,6 +518,9 @@
             .portfolio-card { height: auto; flex-direction: column; }
             .portfolio-card .card-content { width: 100%; }
             .portfolio-card .card-photo { width: 100%; height: 200px; }
+            /* Content text section — wider on mobile */
+            .content-sticky p { max-width: 90vw; }
+            /* About section */
             .about-section { flex-direction: column; min-height: auto; padding-left: 20px; padding-right: 20px; }
             .about-col { padding: 0; }
             .about-divider { width: 100%; height: 1px; margin: 40px 0; }
@@ -530,6 +533,9 @@
                 width: 85vw;
                 height: 80vh;
             }
+            .footer-title { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+            .footer-contact { flex-direction: column; gap: 12px; }
+            .footer-bottom { padding-bottom: clamp(30px, 5vh, 60px); }
         }
     </style>
 </head>
