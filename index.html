@@ -511,6 +511,15 @@
             .portfolio-card .card-photo { width: 100%; height: 200px; }
             .about-section { flex-direction: column; min-height: auto; }
             .about-divider { width: 100%; height: 1px; margin: 40px 0; }
+            /* Footer card — portrait on mobile, smaller to reveal lake */
+            .footer-card {
+                width: 85vw;
+                height: 80vh;
+            }
+            .footer-content {
+                width: 85vw;
+                height: 80vh;
+            }
         }
     </style>
 </head>
@@ -948,10 +957,10 @@
             const scrollY = window.scrollY;
             const vh = window.innerHeight;
 
-            // Frame: scale from 1.0 → ~0.88 (equivalent to 80px padding on each side)
+            // Frame: scale from 1.0 → slightly smaller card
             const frameZone = vh * 1.0;
             const progress = Math.min(1, scrollY / frameZone);
-            const maxInset = 80;
+            const maxInset = window.innerWidth <= 768 ? 20 : 80;
             const scaleX = 1 - (maxInset * 2) / window.innerWidth;
             const scaleY = 1 - (maxInset * 2) / vh;
             const minScale = Math.min(scaleX, scaleY);
