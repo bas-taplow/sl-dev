@@ -152,7 +152,7 @@
 
         /* Horizontal scrolling testimonials */
         .testimonials-spacer {
-            height: 500vh;
+            height: 400vh;
             position: relative;
         }
 
@@ -1033,9 +1033,10 @@
 
         // Lenis smooth scroll
         const lenis = new Lenis({
-            lerp: 0.07,
+            lerp: 0.1,
             smoothWheel: true,
-            wheelMultiplier: 0.8
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.8
         });
         lenis.on('scroll', updateTargets);
 
@@ -1185,7 +1186,7 @@
             lenis.raf(now);
 
             // Lerps
-            const lerpFrame = 0.065;
+            const lerpFrame = 0.1;
             currentScale += (targetScale - currentScale) * lerpFrame;
             currentRadius += (targetRadius - currentRadius) * lerpFrame;
             heroCard.style.transform = `scale(${currentScale})`;
@@ -1194,14 +1195,14 @@
             currentTitleY += (targetTitleY - currentTitleY) * lerpFrame;
             mainContent.style.transform = `translateY(-${currentTitleY}px)`;
 
-            shaderIntensity += (targetShaderIntensity - shaderIntensity) * 0.04;
+            shaderIntensity += (targetShaderIntensity - shaderIntensity) * 0.06;
 
-            currentBgR += (targetBgR - currentBgR) * 0.08;
-            currentBgG += (targetBgG - currentBgG) * 0.08;
-            currentBgB += (targetBgB - currentBgB) * 0.08;
+            currentBgR += (targetBgR - currentBgR) * 0.12;
+            currentBgG += (targetBgG - currentBgG) * 0.12;
+            currentBgB += (targetBgB - currentBgB) * 0.12;
             testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
 
-            currentTrackX += (targetTrackX - currentTrackX) * 0.06;
+            currentTrackX += (targetTrackX - currentTrackX) * 0.1;
             testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
 
             // Footer card scale lerps
