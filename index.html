@@ -513,21 +513,12 @@
         }
         .footer-boat.visible { opacity: 0.85; }
 
-        /* Click ripple in footer */
-        .footer-ripple {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid rgba(21, 94, 232, 0.5);
-            box-shadow: 0 0 12px 2px rgba(21, 94, 232, 0.2), inset 0 0 12px 2px rgba(21, 94, 232, 0.08);
-            pointer-events: none;
-            z-index: 5;
-            transform: translate(-50%, -50%) scale(0);
-            animation: ripple-expand 1.6s cubic-bezier(0.0, 0.4, 0.4, 1) forwards;
+        /* Card translucency on click */
+        .footer-card {
+            transition: opacity 0.3s ease;
         }
-        @keyframes ripple-expand {
-            0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            70%  { opacity: 0.4; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        .footer-card.ripple-active {
+            opacity: 0.82;
         }
 
         @media (max-width: 768px) {
@@ -807,6 +798,10 @@
         uniform float u_sun_streak; uniform float u_sun_flare; uniform float u_sun_warp;
         uniform float u_sun_edge_glow; uniform float u_sun_glitter; uniform float u_sun_glitter_density; uniform float u_sun_glitter_size;
 
+        // Click ripple
+        uniform vec2 u_click_pos;
+        uniform float u_click_age;
+
         float random(in vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
         float noise(in vec2 st) {
             vec2 i = floor(st); vec2 f = fract(st);
@@ -929,6 +924,24 @@
                 st += jitter * u_scatter * 0.008;
             }
             st *= u_zoom; st.y *= u_wave_stretch;
+
+            // Click ripple distortion
+            if (u_click_age < 4.0) {
+                vec2 clickSt = u_click_pos;
+                clickSt.x *= u_resolution.x / u_resolution.y;
+                clickSt *= u_zoom; clickSt.y *= u_wave_stretch;
+                vec2 delta = st - clickSt;
+                float dist = length(delta);
+                float rippleSpeed = 1.8;
+                float waveLen = 25.0;
+                float rippleFront = u_click_age * rippleSpeed;
+                float rippleWidth = 0.6 + u_click_age * 0.3;
+                float envelope = exp(-pow(dist - rippleFront, 2.0) / (2.0 * rippleWidth * rippleWidth));
+                float decay = exp(-u_click_age * 1.2);
+                float wave = sin(dist * waveLen - u_click_age * 12.0) * envelope * decay * 0.12;
+                st += normalize(delta + vec2(0.001)) * wave;
+            }
+
             gl_FragColor = vec4(getRender(st), 1.0);
         }
     </script>
@@ -1130,7 +1143,8 @@
             u_sun_size: gl.getUniformLocation(program, 'u_sun_size'), u_sun_glitter: gl.getUniformLocation(program, 'u_sun_glitter'),
             u_sun_glitter_density: gl.getUniformLocation(program, 'u_sun_glitter_density'), u_sun_glitter_size: gl.getUniformLocation(program, 'u_sun_glitter_size'),
             u_sun_streak: gl.getUniformLocation(program, 'u_sun_streak'), u_sun_flare: gl.getUniformLocation(program, 'u_sun_flare'),
-            u_sun_warp: gl.getUniformLocation(program, 'u_sun_warp'), u_sun_edge_glow: gl.getUniformLocation(program, 'u_sun_edge_glow')
+            u_sun_warp: gl.getUniformLocation(program, 'u_sun_warp'), u_sun_edge_glow: gl.getUniformLocation(program, 'u_sun_edge_glow'),
+            u_click_pos: gl.getUniformLocation(program, 'u_click_pos'), u_click_age: gl.getUniformLocation(program, 'u_click_age')
         };
 
         function hex2rgb(hex) {
@@ -1174,6 +1188,7 @@
         gl.uniform1f(locs.u_sun_flare, parseFloat(getVal('sunFlare', '0.0')));
         gl.uniform1f(locs.u_sun_warp, parseFloat(getVal('sunWarp', '1.0')));
         gl.uniform1f(locs.u_sun_edge_glow, parseFloat(getVal('sunEdgeGlow', '0.5')));
+        gl.uniform1f(locs.u_click_age, 99.0); // no ripple on hero
 
         // Shader intensity constants
         const baseSpeed = 0.06, maxSpeed = 0.18;
@@ -1266,23 +1281,16 @@
             boat.style.transform = 'translate(-50%, -50%)' + flip;
         });
 
-        // --- Click ripple in footer ---
+        // --- Click ripple in footer (shader + card translucency) ---
         footerSticky.addEventListener('click', (e) => {
             const rect = footerSticky.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            for (let i = 0; i < 3; i++) {
-                const ripple = document.createElement('div');
-                ripple.className = 'footer-ripple';
-                const s = 250 + i * 150;
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.width = s + 'px';
-                ripple.style.height = s + 'px';
-                ripple.style.animationDelay = (i * 0.12) + 's';
-                footerSticky.appendChild(ripple);
-                ripple.addEventListener('animationend', () => ripple.remove());
-            }
+            // Normalized 0-1 coords (y flipped for WebGL)
+            clickPos[0] = (e.clientX - rect.left) / rect.width;
+            clickPos[1] = 1.0 - (e.clientY - rect.top) / rect.height;
+            clickAge = 0.0;
+            // Card translucency
+            footerCard.classList.add('ripple-active');
+            setTimeout(() => footerCard.classList.remove('ripple-active'), 1200);
         });
 
         // --- Footer WebGL Setup (second canvas, sunset lake config) ---
@@ -1314,7 +1322,8 @@
          'u_speed','u_distortion','u_zoom','u_flow_angle','u_directional','u_radial_ripple',
          'u_drop_pos','u_wave_stretch','u_scatter','u_contrast',
          'u_sun_pos','u_sun_int','u_sun_size','u_sun_glitter','u_sun_glitter_density',
-         'u_sun_glitter_size','u_sun_streak','u_sun_flare','u_sun_warp','u_sun_edge_glow'
+         'u_sun_glitter_size','u_sun_streak','u_sun_flare','u_sun_warp','u_sun_edge_glow',
+         'u_click_pos','u_click_age'
         ].forEach(name => { fLocs[name] = fGl.getUniformLocation(fProgram, name); });
 
         // Set footer static uniforms once
@@ -1346,6 +1355,12 @@
         fGl.uniform1f(fLocs.u_speed, parseFloat(fGetVal('speed', '0.1')));
         fGl.uniform1f(fLocs.u_distortion, parseFloat(fGetVal('distortion', '4')));
         fGl.uniform1f(fLocs.u_radial_ripple, parseFloat(fGetVal('radialRipple', '1')));
+        fGl.uniform1f(fLocs.u_click_age, 99.0);
+        fGl.uniform2f(fLocs.u_click_pos, 0.0, 0.0);
+
+        // Click ripple state
+        let clickAge = 99.0;
+        let clickPos = [0, 0];
 
         // Footer canvas resize
         function resizeFooter() {
@@ -1360,10 +1375,14 @@
         let footerLastTime = performance.now();
 
         function renderFooter(now) {
-            footerTime += (now - footerLastTime);
+            const dt = now - footerLastTime;
+            footerTime += dt;
             footerLastTime = now;
+            if (clickAge < 99.0) clickAge += dt * 0.001;
             fGl.uniform2f(fLocs.u_resolution, fCanvas.width, fCanvas.height);
             fGl.uniform1f(fLocs.u_time, footerTime * 0.001);
+            fGl.uniform2f(fLocs.u_click_pos, clickPos[0], clickPos[1]);
+            fGl.uniform1f(fLocs.u_click_age, clickAge);
             fGl.drawArrays(fGl.TRIANGLES, 0, 6);
         }
     </script>
