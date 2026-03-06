@@ -435,6 +435,15 @@
             width: auto;
             object-fit: contain;
         }
+        .experience-logos img[alt="Groupon"] {
+            height: clamp(20px, 2.5vw, 35px);
+        }
+        .experience-logos img[alt="Credit Suisse"] {
+            height: clamp(30px, 3.75vw, 52.5px);
+        }
+        .experience-logos img[alt="UChicago"] {
+            height: clamp(36px, 4.5vw, 63px);
+        }
         .experience-logos .brand-text {
             font-size: clamp(1.4rem, 2vw, 2.4rem);
             font-weight: 700;
@@ -458,6 +467,97 @@
             margin: clamp(24px, 2.5vw, 40px) 0 0 0;
             line-height: 1.4;
             font-style: italic;
+        }
+
+        /* Founders grid */
+        .founders-grid-section {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            padding: clamp(40px, 5vw, 80px) clamp(20px, 4vw, 80px);
+        }
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(8px, 1vw, 16px);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .founder-tile {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .founder-tile-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+            filter: url(#duotone-blue);
+        }
+        .founder-tile:hover .founder-tile-bg {
+            opacity: 1;
+            filter: none;
+        }
+        .founder-tile-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: clamp(12px, 1.5vw, 24px);
+            transition: opacity 0.5s ease;
+        }
+        .founder-tile:hover .founder-tile-overlay {
+            opacity: 0;
+        }
+        .founder-tile-company {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1.2rem, 1.8vw, 2.4rem);
+            color: #155EE8;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+        .founder-tile-name {
+            font-size: clamp(0.7rem, 0.8vw, 0.95rem);
+            color: rgba(21, 94, 232, 0.5);
+            margin-top: 4px;
+        }
+        .founder-tile-hover {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: clamp(12px, 1.5vw, 24px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+        }
+        .founder-tile:hover .founder-tile-hover {
+            opacity: 1;
+        }
+        .founder-tile-hover .founder-tile-company {
+            color: #fff;
+        }
+        .founder-tile-hover .founder-tile-name {
+            color: rgba(255,255,255,0.7);
+        }
+        /* Placeholder tiles without photos */
+        .founder-tile.no-photo {
+            background: #f0f4fb;
+        }
+        .founder-tile.no-photo .founder-tile-bg {
+            display: none;
+        }
+        .founder-tile.no-photo:hover .founder-tile-overlay {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .founders-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         /* Footer — white scales down to card, revealing WebGL lake */
@@ -696,6 +796,70 @@
                 <span class="reveal-line">Those journeys forge resilience,</span>
                 <span class="reveal-line">ambition, and perspective.</span>
             </p>
+        </div>
+    </div>
+
+    <!-- Founders grid -->
+    <div class="founders-grid-section">
+        <div class="founders-grid">
+            <div class="founder-tile">
+                <div class="founder-tile-bg" style="background-image: url('deel.jpg');"></div>
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Deel</span>
+                    <span class="founder-tile-name">Alex Bouaziz & Shuo Wang</span>
+                </div>
+                <div class="founder-tile-hover">
+                    <span class="founder-tile-company">Deel</span>
+                    <span class="founder-tile-name">Alex Bouaziz & Shuo Wang</span>
+                </div>
+            </div>
+            <div class="founder-tile">
+                <div class="founder-tile-bg" style="background-image: url('kalshi.jpg');"></div>
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Kalshi</span>
+                    <span class="founder-tile-name">Tarek Mansour & Luana Lopes Lara</span>
+                </div>
+                <div class="founder-tile-hover">
+                    <span class="founder-tile-company">Kalshi</span>
+                    <span class="founder-tile-name">Tarek Mansour & Luana Lopes Lara</span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Headway</span>
+                    <span class="founder-tile-name">Andrew Adams</span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">DoNotPay</span>
+                    <span class="founder-tile-name">Joshua Browder</span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Draftwise</span>
+                    <span class="founder-tile-name"></span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Federato</span>
+                    <span class="founder-tile-name"></span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Pry Financials</span>
+                    <span class="founder-tile-name"></span>
+                </div>
+            </div>
+            <div class="founder-tile no-photo">
+                <div class="founder-tile-overlay">
+                    <span class="founder-tile-company">Rise Healthcare</span>
+                    <span class="founder-tile-name"></span>
+                </div>
+            </div>
         </div>
     </div>
 
