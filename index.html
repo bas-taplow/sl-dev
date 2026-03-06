@@ -579,74 +579,65 @@
             flex-direction: column;
             max-width: 1400px;
             margin: 0 auto;
-            background: #111;
+            background: #f0f0eb;
             border-radius: clamp(12px, 1.2vw, 20px);
             overflow: hidden;
+            padding: 0 clamp(24px, 3vw, 48px);
         }
         .founders-rows.active {
             display: flex;
         }
         .founders-row {
-            display: flex;
-            align-items: center;
-            padding: clamp(20px, 2vw, 36px) clamp(24px, 3vw, 48px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: background 0.2s ease;
+            display: grid;
+            grid-template-columns: clamp(140px, 18vw, 260px) clamp(120px, 14vw, 200px) 1fr;
+            align-items: start;
+            padding: clamp(24px, 2.5vw, 40px) 0;
+            border-bottom: 1px solid rgba(21, 94, 232, 0.12);
+            gap: clamp(16px, 2vw, 32px);
         }
         .founders-row:last-child {
             border-bottom: none;
         }
-        .founders-row:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        .founders-row-logo {
-            width: clamp(80px, 8vw, 120px);
-            flex-shrink: 0;
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(0.9rem, 1.1vw, 1.4rem);
-            color: rgba(255,255,255,0.5);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
         .founders-row-info {
-            flex: 1;
-            padding-left: clamp(16px, 2vw, 32px);
+            display: flex;
+            flex-direction: column;
         }
         .founders-row-name {
-            font-family: inherit;
-            font-size: clamp(1rem, 1.3vw, 1.6rem);
-            color: #fff;
-            font-weight: 600;
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1.1rem, 1.4vw, 1.8rem);
+            color: #155EE8;
+            font-weight: 400;
+            line-height: 1.2;
         }
-        .founders-row-desc {
-            font-size: clamp(0.8rem, 0.9vw, 1.05rem);
-            color: rgba(255,255,255,0.45);
+        .founders-row-category {
+            font-size: clamp(0.75rem, 0.85vw, 0.95rem);
+            color: rgba(21, 94, 232, 0.4);
             margin-top: 4px;
         }
-        .founders-row-arrow {
-            flex-shrink: 0;
-            width: clamp(36px, 3vw, 48px);
-            height: clamp(36px, 3vw, 48px);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 4px;
+        .founders-row-region {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: clamp(16px, 2vw, 32px);
+            flex-direction: column;
         }
-        .founders-row-arrow svg {
-            width: 16px;
-            height: 16px;
-            stroke: rgba(255,255,255,0.5);
-            fill: none;
-            stroke-width: 2;
+        .founders-row-region-name {
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            color: #155EE8;
+        }
+        .founders-row-region-country {
+            font-size: clamp(0.75rem, 0.85vw, 0.95rem);
+            color: rgba(21, 94, 232, 0.4);
+            margin-top: 2px;
+        }
+        .founders-row-desc {
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            color: rgba(21, 94, 232, 0.6);
+            line-height: 1.5;
         }
 
         @media (max-width: 768px) {
             .founders-grid { grid-template-columns: repeat(2, 1fr); }
             .founders-list { grid-template-columns: repeat(2, 1fr); }
-            .founders-row-logo { display: none; }
+            .founders-row { grid-template-columns: 1fr; }
+            .founders-row-region { display: none; }
         }
 
         /* Footer — white scales down to card, revealing WebGL lake */
@@ -1010,84 +1001,114 @@
         </div>
         <div class="founders-rows" id="foundersRows">
             <div class="founders-row">
-                <div class="founders-row-logo">Minimal</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Minimal AI</div>
-                    <div class="founders-row-desc">Enterprise AI agents that automate complex back-office workflows.</div>
+                    <div class="founders-row-category">Artificial Intelligence</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">North America</span>
+                    <span class="founders-row-region-country">USA</span>
+                </div>
+                <div class="founders-row-desc">Enterprise AI agents that automate complex back-office workflows.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Dedalus</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Dedalus Labs</div>
-                    <div class="founders-row-desc">Next-generation compute infrastructure for decentralized AI training.</div>
+                    <div class="founders-row-category">Deep Tech</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">France</span>
+                </div>
+                <div class="founders-row-desc">Next-generation compute infrastructure for decentralized AI training.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Entire</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Entire</div>
-                    <div class="founders-row-desc">Unified platform replacing fragmented supply chain software for manufacturers.</div>
+                    <div class="founders-row-category">Enterprise Software</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">Germany</span>
+                </div>
+                <div class="founders-row-desc">Unified platform replacing fragmented supply chain software for manufacturers.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Blurry</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Blurry</div>
-                    <div class="founders-row-desc">Privacy-first identity verification for financial services and healthcare.</div>
+                    <div class="founders-row-category">Fintech</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">UK</span>
+                </div>
+                <div class="founders-row-desc">Privacy-first identity verification for financial services and healthcare.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Fullseam</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Fullseam</div>
-                    <div class="founders-row-desc">Seamless integration layer connecting legacy ERP systems to modern tools.</div>
+                    <div class="founders-row-category">Enterprise Software</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">North America</span>
+                    <span class="founders-row-region-country">Canada</span>
+                </div>
+                <div class="founders-row-desc">Seamless integration layer connecting legacy ERP systems to modern tools.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Duranta</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Duranta</div>
-                    <div class="founders-row-desc">Climate-resilient agriculture technology for emerging market farmers.</div>
+                    <div class="founders-row-category">Climate Tech</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">LATAM</span>
+                    <span class="founders-row-region-country">Brazil</span>
+                </div>
+                <div class="founders-row-desc">Climate-resilient agriculture technology for emerging market farmers.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Interface</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">The Interface</div>
-                    <div class="founders-row-desc">Developer tools that turn natural language into production-ready APIs.</div>
+                    <div class="founders-row-category">Developer Tools</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">Netherlands</span>
+                </div>
+                <div class="founders-row-desc">Developer tools that turn natural language into production-ready APIs.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Astor</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Astor</div>
-                    <div class="founders-row-desc">Autonomous logistics platform for last-mile delivery in dense cities.</div>
+                    <div class="founders-row-category">Logistics</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">UAE</span>
+                </div>
+                <div class="founders-row-desc">Autonomous logistics platform for last-mile delivery in dense cities.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Pillar</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Pillar</div>
-                    <div class="founders-row-desc">Embedded compliance infrastructure for cross-border fintech companies.</div>
+                    <div class="founders-row-category">Fintech</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">EMEA</span>
+                    <span class="founders-row-region-country">Israel</span>
+                </div>
+                <div class="founders-row-desc">Embedded compliance infrastructure for cross-border fintech companies.</div>
             </div>
             <div class="founders-row">
-                <div class="founders-row-logo">Paloma</div>
                 <div class="founders-row-info">
                     <div class="founders-row-name">Paloma</div>
-                    <div class="founders-row-desc">Conversational commerce platform powering direct-to-consumer brands in Asia.</div>
+                    <div class="founders-row-category">Commerce</div>
                 </div>
-                <div class="founders-row-arrow"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></div>
+                <div class="founders-row-region">
+                    <span class="founders-row-region-name">APAC</span>
+                    <span class="founders-row-region-country">Japan</span>
+                </div>
+                <div class="founders-row-desc">Conversational commerce platform powering direct-to-consumer brands in Asia.</div>
             </div>
         </div>
     </div>
