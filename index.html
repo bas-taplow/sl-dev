@@ -586,16 +586,20 @@
             display: grid;
             grid-template-columns: clamp(160px, 22vw, 320px) clamp(120px, 14vw, 200px) 1fr auto;
             align-items: center;
-            padding: clamp(24px, 2.5vw, 40px) 0;
+            padding: 0;
             border-bottom: 1px solid #155EE8;
             gap: clamp(16px, 2vw, 32px);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            max-height: clamp(28px, 3vw, 40px);
+            overflow: hidden;
+            opacity: 0.4;
+            transition: max-height 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        opacity 0.6s ease,
+                        padding 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-        .founders-row.visible {
+        .founders-row.expanded {
+            max-height: 200px;
+            padding: clamp(24px, 2.5vw, 40px) 0;
             opacity: 1;
-            transform: translateY(0);
         }
         .founders-row:last-child {
             border-bottom: none;
@@ -910,12 +914,12 @@
         <div class="founders-grid-header">
             <h2 class="founders-grid-title">Companies</h2>
             <div class="view-toggle" id="viewToggle">
-                <button class="active" data-view="grid">Grid</button>
+                <button data-view="grid">Grid</button>
                 <button data-view="list">List</button>
-                <button data-view="rows">Rows</button>
+                <button class="active" data-view="rows">Rows</button>
             </div>
         </div>
-        <div class="founders-grid" id="foundersGrid">
+        <div class="founders-grid hidden" id="foundersGrid">
             <div class="founder-tile">
                 <div class="founder-tile-top">
                     <span class="founder-tile-company">Minimal AI</span>
@@ -1025,7 +1029,7 @@
                 <span class="founders-list-name">Paloma</span>
             </div>
         </div>
-        <div class="founders-rows" id="foundersRows">
+        <div class="founders-rows active" id="foundersRows">
             <div class="founders-row">
                 <div class="founders-row-info">
                     <div class="founders-row-name">Minimal AI</div>
@@ -2018,27 +2022,27 @@
             else if (btn.dataset.view === 'list') foundersList.classList.add('active');
             else if (btn.dataset.view === 'rows') {
                 foundersRows.classList.add('active');
-                const rows = foundersRows.querySelectorAll('.founders-row');
-                rows.forEach((row, i) => {
-                    row.classList.remove('visible');
-                    setTimeout(() => row.classList.add('visible'), i * 100);
-                });
+                expandRowsOnScroll();
             }
         });
 
-        /* Rows entrance on scroll */
-        const rowObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const rows = foundersRows.querySelectorAll('.founders-row');
-                    rows.forEach((row, i) => {
-                        setTimeout(() => row.classList.add('visible'), i * 100);
-                    });
-                    rowObserver.unobserve(entry.target);
+        /* Rows scroll-driven ripple expand */
+        const allRows = foundersRows.querySelectorAll('.founders-row');
+        function expandRowsOnScroll() {
+            const rect = foundersRows.getBoundingClientRect();
+            const vh = window.innerHeight;
+            allRows.forEach((row, i) => {
+                const rowTop = row.getBoundingClientRect().top;
+                const trigger = vh * 0.85;
+                if (rowTop < trigger) {
+                    row.classList.add('expanded');
+                } else {
+                    row.classList.remove('expanded');
                 }
             });
-        }, { threshold: 0.1 });
-        rowObserver.observe(foundersRows);
+        }
+        lenis.on('scroll', expandRowsOnScroll);
+        expandRowsOnScroll();
     </script>
 </body>
 </html>
