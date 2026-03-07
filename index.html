@@ -234,12 +234,20 @@
             position: relative;
         }
 
-        .portfolio-card .card-photo.duotone {
+        /* Duotone overlay layer — sits on top of color photo */
+        .portfolio-card .card-photo.duotone::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            background-size: inherit;
+            background-position: inherit;
             filter: url(#duotone-blue);
-            transition: filter 1.4s ease;
+            opacity: 1;
+            transition: opacity 1.4s ease;
         }
-        .portfolio-card .card-photo.duotone.in-focus {
-            filter: none;
+        .portfolio-card .card-photo.duotone.in-focus::after {
+            opacity: 0;
         }
 
         .portfolio-card .card-header {
@@ -2350,20 +2358,24 @@
                 bioContent.innerHTML = html;
 
                 bioOverlay.classList.add('open');
-                document.body.style.overflow = 'hidden';
+                bioOverlay.scrollTop = 0;
                 lenis.stop();
+                document.documentElement.style.overflow = 'hidden';
             });
         });
 
         function closeBio() {
             bioOverlay.classList.remove('open');
-            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
             lenis.start();
         }
         bioClose.addEventListener('click', closeBio);
         bioOverlay.addEventListener('click', (e) => {
             if (e.target === bioOverlay) closeBio();
         });
+
+        // Prevent wheel events on overlay from reaching Lenis/page
+        bioOverlay.addEventListener('wheel', (e) => e.stopPropagation(), { passive: false });
 
     </script>
 </body>
