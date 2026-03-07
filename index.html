@@ -665,9 +665,32 @@
 
         @media (max-width: 768px) {
             .founders-grid { grid-template-columns: repeat(2, 1fr); }
-            .founders-list { grid-template-columns: repeat(2, 1fr); }
-            .founders-row { grid-template-columns: 1fr; }
+            .founders-grid-header { flex-direction: column; gap: 12px; }
+            .founders-grid-title { font-size: clamp(2rem, 7vw, 3rem); }
+            .founders-list { grid-template-columns: 1fr; }
+            .founders-list-name { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+            .founders-rows { padding: 0; }
+            .founders-row {
+                grid-template-columns: 1fr auto;
+                gap: clamp(8px, 2vw, 16px);
+                max-height: clamp(24px, 5vw, 32px);
+            }
+            .founders-row.expanded {
+                max-height: 300px;
+                padding: clamp(16px, 4vw, 24px) 0;
+            }
+            .founders-row-name { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+            .founders-row-category { font-size: clamp(0.65rem, 2.5vw, 0.8rem); }
             .founders-row-region { display: none; }
+            .founders-row-desc {
+                grid-column: 1 / -1;
+                font-size: clamp(0.75rem, 3vw, 0.9rem);
+            }
+            .founders-row-arrow {
+                width: 32px;
+                height: 32px;
+            }
+            .view-toggle button { font-size: 11px; padding: 4px 8px; }
         }
 
         /* Footer — white scales down to card, revealing WebGL lake */
@@ -822,6 +845,13 @@
             .about-section { flex-direction: column; min-height: auto; padding-left: 20px; padding-right: 20px; }
             .about-col { padding: 0; }
             .about-divider { width: 100%; height: 1px; margin: 40px 0; }
+            .about-title { font-size: clamp(2rem, 7vw, 3rem); }
+            .about-text { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+            .backed-title { font-size: clamp(1.2rem, 4vw, 1.6rem); }
+            /* Companies section */
+            .founders-grid-section { padding: clamp(30px, 5vw, 60px) 20px; }
+            /* Marquee */
+            .logo-marquee { padding: clamp(20px, 3vw, 40px) 0; }
             /* Footer card — portrait on mobile, smaller to reveal lake */
             .footer-card {
                 width: 85vw;
