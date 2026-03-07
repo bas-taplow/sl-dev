@@ -439,13 +439,10 @@
         .about-header {
             display: flex;
             align-items: baseline;
-            gap: clamp(16px, 1.5vw, 28px);
+            justify-content: flex-start;
             max-width: 1400px;
             margin: 0 auto clamp(32px, 3vw, 56px);
-            padding: 0 clamp(30px, 4vw, 80px);
-        }
-        .about-header .about-title {
-            margin: 0;
+            padding: 0;
         }
 
         /* About columns view (original two-column) */
@@ -1384,7 +1381,6 @@
     <section class="about-section">
         <!-- About toggle header -->
         <div class="about-header">
-            <h2 class="about-title">About</h2>
             <div class="view-toggle" id="aboutToggle">
                 <button class="active" data-view="columns">Columns</button>
                 <button data-view="stacked">Stacked</button>
