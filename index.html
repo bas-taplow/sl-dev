@@ -338,18 +338,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* The Fund section */
-        .about-fund-section {
-            position: relative;
-            z-index: 2;
-            background: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: clamp(80px, 8vw, 160px) clamp(40px, 6vw, 120px);
-        }
-
+        /* Shared about typography */
         .about-title {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: clamp(2.8rem, 3.8vw, 5.5rem);
@@ -358,7 +347,6 @@
             margin: 0 0 clamp(24px, 2.5vw, 48px) 0;
             line-height: 1.1;
         }
-
         .about-subtitle {
             font-size: clamp(0.85rem, 0.95vw, 1.15rem);
             text-transform: uppercase;
@@ -366,7 +354,6 @@
             color: rgba(21, 94, 232, 0.5);
             margin: 0 0 clamp(24px, 2.5vw, 48px) 0;
         }
-
         .about-text {
             font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
             font-size: clamp(1.1rem, 1.3vw, 1.6rem);
@@ -374,63 +361,6 @@
             color: #155EE8;
             margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
             font-weight: 400;
-        }
-
-        .about-fund-inner {
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .about-fund-row {
-            display: flex;
-            flex-direction: row;
-            gap: clamp(40px, 5vw, 80px);
-            align-items: flex-start;
-        }
-        .about-fund-text {
-            flex: 3;
-        }
-        .about-fund-desc {
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.1rem, 1.3vw, 1.6rem);
-            line-height: 1.53;
-            color: #155EE8;
-            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
-            font-weight: 400;
-        }
-        .about-fund-backed {
-            flex: 2;
-            padding-top: clamp(4px, 0.4vw, 8px);
-        }
-        .backed-title {
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.4rem, 1.8vw, 2.2rem);
-            color: #155EE8;
-            font-weight: 400;
-            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
-        }
-        .backed-logos-stacked {
-            display: flex;
-            flex-direction: column;
-            gap: clamp(8px, 0.8vw, 14px);
-        }
-        .backed-logos-stacked .backed-text {
-            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
-            color: rgba(21, 94, 232, 0.5);
-            font-weight: 500;
-        }
-
-        /* Fund section fade-up entrance */
-        .about-fund-inner {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
-                        transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        .about-fund-inner.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         /* Team Section */
@@ -469,6 +399,25 @@
             color: #155EE8;
             margin: 0;
             font-weight: 400;
+        }
+        .team-backed {
+            margin-top: clamp(32px, 3vw, 48px);
+            padding-top: clamp(24px, 2vw, 36px);
+            border-top: 1px solid rgba(21, 94, 232, 0.15);
+        }
+        .team-backed-title {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1rem, 1.2vw, 1.4rem);
+            color: #155EE8;
+            font-weight: 400;
+            margin: 0 0 clamp(12px, 1vw, 20px) 0;
+        }
+        .team-backed-name {
+            display: block;
+            font-size: clamp(0.8rem, 0.9vw, 1rem);
+            color: rgba(21, 94, 232, 0.45);
+            font-weight: 500;
+            line-height: 2;
         }
         .team-cards {
             flex: 1 1 60%;
@@ -720,6 +669,15 @@
         .founders-grid-title.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        .founders-grid-subtitle {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1rem, 1.2vw, 1.5rem);
+            line-height: 1.5;
+            color: rgba(21, 94, 232, 0.6);
+            max-width: 700px;
+            margin: 0 auto clamp(32px, 3vw, 56px);
+            font-weight: 400;
         }
         .founders-grid {
             display: grid;
@@ -1098,15 +1056,9 @@
             /* Content text section — reflow as single block on mobile */
             .content-sticky p { max-width: 90vw; }
             .reveal-line { display: inline; }
-            /* About / Fund section */
-            .about-fund-section { padding-left: 20px; padding-right: 20px; }
+            /* About typography */
             .about-title { font-size: clamp(2rem, 7vw, 3rem); }
             .about-text { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
-            .about-fund-row { flex-direction: column; }
-            .about-fund-backed { width: 100%; }
-            .backed-logos-stacked { flex-direction: row; flex-wrap: wrap; gap: clamp(12px, 3vw, 20px); }
-            .backed-title { font-size: clamp(1.2rem, 4vw, 1.6rem); }
-            .about-fund-desc { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
             /* Team section */
             .team-section { padding-left: 20px; padding-right: 20px; }
             .team-layout { flex-direction: column; }
@@ -1209,6 +1161,7 @@
     <div class="founders-grid-section">
         <div class="founders-grid-header">
             <h2 class="founders-grid-title">Companies</h2>
+            <p class="founders-grid-subtitle">Backing exceptional founders at the earliest stages — people whose lived experiences forge the resilience and perspective to build transformative companies.</p>
         </div>
         <div class="founders-rows" id="foundersRows">
             <div class="founders-row">
@@ -1416,28 +1369,6 @@
         </div>
     </div>
 
-    <!-- The Fund -->
-    <section class="about-fund-section">
-        <div class="about-fund-inner">
-            <h2 class="about-title">The Fund</h2>
-            <div class="about-fund-row">
-                <div class="about-fund-text">
-                    <p class="about-fund-desc">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
-                    <p class="about-fund-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="about-fund-backed">
-                    <h3 class="backed-title">Backed by:</h3>
-                    <div class="backed-logos-stacked">
-                        <span class="backed-text">Accell</span>
-                        <span class="backed-text">Taplow Blue Capital</span>
-                        <span class="backed-text">Fund A</span>
-                        <span class="backed-text">Fund B</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Team Section -->
     <section class="team-section">
         <div class="team-inner">
@@ -1445,6 +1376,13 @@
                 <!-- Left: Sticky descriptive text -->
                 <div class="team-sticky-text">
                     <p class="team-desc">Sunshine Lake Capital is built by a team of operators, investors, and global citizens who believe the best founders are forged by uncommon journeys.</p>
+                    <div class="team-backed">
+                        <h3 class="team-backed-title">Backed by:</h3>
+                        <span class="team-backed-name">Accell</span>
+                        <span class="team-backed-name">Taplow Blue Capital</span>
+                        <span class="team-backed-name">Fund A</span>
+                        <span class="team-backed-name">Fund B</span>
+                    </div>
                 </div>
 
                 <!-- Right: Team members -->
@@ -2296,7 +2234,7 @@
             });
         }, { threshold: 0.15 });
 
-        document.querySelectorAll('.about-fund-inner, .team-card').forEach(el => {
+        document.querySelectorAll('.team-card').forEach(el => {
             aboutObserver.observe(el);
         });
 
