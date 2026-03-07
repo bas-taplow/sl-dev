@@ -326,30 +326,12 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* About section — two columns with divider */
-        .about-section {
+        /* The Fund section */
+        .about-fund-section {
             position: relative;
             z-index: 2;
             background: #fff;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
             padding: clamp(80px, 8vw, 160px) clamp(40px, 6vw, 120px);
-        }
-
-        .about-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 0 clamp(30px, 4vw, 80px);
-        }
-
-        .about-divider {
-            width: 1px;
-            background: rgba(21, 94, 232, 0.2);
-            align-self: stretch;
-            flex-shrink: 0;
         }
 
         .about-title {
@@ -376,120 +358,11 @@
             margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
         }
 
-        .about-specs {
-            list-style: none;
-            padding: 0;
-            margin: clamp(20px, 2vw, 40px) 0 0 0;
-        }
-
-        .about-specs li {
-            display: flex;
-            justify-content: space-between;
-            padding: clamp(12px, 1vw, 20px) 0;
-            border-bottom: 1px solid rgba(21, 94, 232, 0.12);
-        }
-
-        .about-specs li:first-child {
-            border-top: 1px solid rgba(21, 94, 232, 0.12);
-        }
-
-        .about-specs .spec-label {
-            font-size: clamp(0.75rem, 0.85vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(21, 94, 232, 0.5);
-        }
-
-        .about-specs .spec-value {
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1rem, 1.2vw, 1.6rem);
-            color: #155EE8;
-            font-weight: 400;
-        }
-
-
-        .backed-section {
-            margin-top: clamp(32px, 3vw, 56px);
-        }
-        .backed-title {
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.4rem, 1.8vw, 2.2rem);
-            color: #155EE8;
-            font-weight: 400;
-            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
-        }
-        .backed-logos {
-            display: flex;
-            align-items: center;
-            gap: clamp(20px, 2.5vw, 40px);
-            flex-wrap: wrap;
-        }
-        .backed-logos img {
-            height: clamp(24px, 3vw, 40px);
-            width: auto;
-            object-fit: contain;
-        }
-        .backed-logos .backed-text {
-            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
-            color: rgba(21, 94, 232, 0.5);
-            font-weight: 500;
-        }
-
-        /* Don photo placeholder in columns view */
-        .about-don-photo-col {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            background: linear-gradient(135deg, rgba(21, 94, 232, 0.08) 0%, rgba(21, 94, 232, 0.15) 100%);
-            border-radius: clamp(10px, 1vw, 16px);
-            margin-bottom: clamp(24px, 2.5vw, 40px);
-        }
-
-        /* About section header with toggle */
-        .about-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: flex-start;
-            margin: 0 0 clamp(32px, 3vw, 56px) 0;
-            padding: 0 clamp(30px, 4vw, 80px);
-        }
-
-        /* About columns view (original two-column) */
-        .about-columns {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-        }
-        .about-columns.hidden {
-            display: none;
-        }
-
-        /* About stacked view */
-        .about-stacked {
-            display: none;
-            flex-direction: column;
+        .about-fund-inner {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 clamp(30px, 4vw, 80px);
-        }
-        .about-stacked.active {
-            display: flex;
         }
 
-        /* Stacked: Fund block */
-        .about-fund-block {
-            margin-bottom: clamp(48px, 5vw, 80px);
-        }
-        .about-fund-block .about-title {
-            margin-bottom: clamp(20px, 2vw, 36px);
-        }
-        .about-fund-desc {
-            font-size: clamp(1rem, 1.15vw, 1.4rem);
-            line-height: 1.53;
-            color: #155EE8;
-            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
-        }
-
-        /* Fund row: text left, backed-by right */
         .about-fund-row {
             display: flex;
             flex-direction: row;
@@ -499,10 +372,23 @@
         .about-fund-text {
             flex: 1;
         }
+        .about-fund-desc {
+            font-size: clamp(1rem, 1.15vw, 1.4rem);
+            line-height: 1.53;
+            color: #155EE8;
+            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
+        }
         .about-fund-backed {
             flex-shrink: 0;
             width: clamp(180px, 18vw, 260px);
             padding-top: clamp(4px, 0.4vw, 8px);
+        }
+        .backed-title {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1.4rem, 1.8vw, 2.2rem);
+            color: #155EE8;
+            font-weight: 400;
+            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
         }
         .backed-logos-stacked {
             display: flex;
@@ -515,43 +401,16 @@
             font-weight: 500;
         }
 
-        /* Spec cards row */
-        .about-spec-cards {
-            display: flex;
-            gap: clamp(12px, 1.2vw, 20px);
-            flex-wrap: wrap;
-            margin-bottom: clamp(32px, 3vw, 56px);
+        /* Don Stalter section */
+        .about-don-section {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            padding: clamp(80px, 8vw, 160px) clamp(40px, 6vw, 120px);
         }
-        .about-spec-card {
-            flex: 1;
-            min-width: 160px;
-            background: #f0f4fb;
-            border-radius: clamp(10px, 1vw, 16px);
-            padding: clamp(20px, 2vw, 32px) clamp(20px, 1.8vw, 28px);
-            display: flex;
-            flex-direction: column;
-            gap: clamp(8px, 0.8vw, 14px);
-        }
-        .about-spec-card-label {
-            font-size: clamp(0.7rem, 0.75vw, 0.85rem);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: rgba(21, 94, 232, 0.5);
-        }
-        .about-spec-card-value {
-            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
-            font-size: clamp(1.1rem, 1.4vw, 1.9rem);
-            color: #155EE8;
-            font-weight: 400;
-            line-height: 1.17;
-        }
-
-        /* Stacked: Don block */
-        .about-don-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(21, 94, 232, 0.15);
-            margin-bottom: clamp(48px, 5vw, 80px);
+        .about-don-inner {
+            max-width: 1400px;
+            margin: 0 auto;
         }
         .about-don-block {
             display: flex;
@@ -571,8 +430,15 @@
         .about-don-photo {
             flex: 1 1 50%;
             aspect-ratio: 3 / 4;
-            background: linear-gradient(135deg, rgba(21, 94, 232, 0.08) 0%, rgba(21, 94, 232, 0.15) 100%);
             border-radius: clamp(10px, 1vw, 16px);
+            overflow: hidden;
+        }
+        .about-don-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: url(#duotone-blue);
         }
 
         /* Founders grid */
@@ -977,24 +843,19 @@
             /* Content text section — reflow as single block on mobile */
             .content-sticky p { max-width: 90vw; }
             .reveal-line { display: inline; }
-            /* About section */
-            .about-section { flex-direction: column; min-height: auto; padding-left: 20px; padding-right: 20px; }
-            .about-header { flex-direction: column; gap: 12px; padding: 0; }
-            .about-columns { flex-direction: column; }
-            .about-col { padding: 0; }
-            .about-divider { width: 100%; height: 1px; margin: 40px 0; }
+            /* About / Fund section */
+            .about-fund-section { padding-left: 20px; padding-right: 20px; }
             .about-title { font-size: clamp(2rem, 7vw, 3rem); }
             .about-text { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
-            .backed-title { font-size: clamp(1.2rem, 4vw, 1.6rem); }
-            .about-stacked { padding: 0; }
-            .about-spec-cards { flex-direction: column; }
-            .about-spec-card { min-width: unset; }
             .about-fund-row { flex-direction: column; }
             .about-fund-backed { width: 100%; }
             .backed-logos-stacked { flex-direction: row; flex-wrap: wrap; gap: clamp(12px, 3vw, 20px); }
-            .about-don-block { flex-direction: column; }
-            .about-don-photo { width: 100%; aspect-ratio: 4 / 3; }
+            .backed-title { font-size: clamp(1.2rem, 4vw, 1.6rem); }
             .about-fund-desc { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+            /* Don section */
+            .about-don-section { padding-left: 20px; padding-right: 20px; }
+            .about-don-block { flex-direction: column; }
+            .about-don-photo { width: 100%; flex: unset; }
             /* Companies section */
             .founders-grid-section { padding: clamp(30px, 5vw, 60px) 20px; }
             /* Marquee */
@@ -1412,26 +1273,18 @@
         </div>
     </div>
 
-    <!-- About: The Fund + Don Stalter -->
-    <section class="about-section">
-        <!-- About toggle header -->
-        <div class="about-header">
-            <div class="view-toggle" id="aboutToggle">
-                <button class="active" data-view="columns">Columns</button>
-                <button data-view="stacked">Stacked</button>
-            </div>
-        </div>
-
-        <!-- View 1: Original two-column layout -->
-        <div class="about-columns" id="aboutColumns">
-            <div class="about-col">
-                <h2 class="about-title">The Fund</h2>
-                <p class="about-text">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
-                <p class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p class="about-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <div class="backed-section">
+    <!-- The Fund -->
+    <section class="about-fund-section">
+        <div class="about-fund-inner">
+            <h2 class="about-title">The Fund</h2>
+            <div class="about-fund-row">
+                <div class="about-fund-text">
+                    <p class="about-fund-desc">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
+                    <p class="about-fund-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                </div>
+                <div class="about-fund-backed">
                     <h3 class="backed-title">Backed by:</h3>
-                    <div class="backed-logos">
+                    <div class="backed-logos-stacked">
                         <span class="backed-text">Accell</span>
                         <span class="backed-text">Taplow Blue Capital</span>
                         <span class="backed-text">Fund A</span>
@@ -1439,42 +1292,16 @@
                     </div>
                 </div>
             </div>
-            <div class="about-divider"></div>
-            <div class="about-col">
-                <div class="about-don-photo-col"></div>
-                <h2 class="about-title">Don Stalter</h2>
-                <p class="about-subtitle">General Partner</p>
-                <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
-                <p class="about-text">Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.</p>
-            </div>
         </div>
+    </section>
 
-        <!-- View 2: Stacked full-width layout -->
-        <div class="about-stacked" id="aboutStacked">
-            <!-- The Fund block -->
-            <div class="about-fund-block">
-                <h2 class="about-title">The Fund</h2>
-                <div class="about-fund-row">
-                    <div class="about-fund-text">
-                        <p class="about-fund-desc">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
-                        <p class="about-fund-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    </div>
-                    <div class="about-fund-backed">
-                        <h3 class="backed-title">Backed by:</h3>
-                        <div class="backed-logos-stacked">
-                            <span class="backed-text">Accell</span>
-                            <span class="backed-text">Taplow Blue Capital</span>
-                            <span class="backed-text">Fund A</span>
-                            <span class="backed-text">Fund B</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Don Stalter block -->
-            <div class="about-don-divider"></div>
+    <!-- Don Stalter -->
+    <section class="about-don-section">
+        <div class="about-don-inner">
             <div class="about-don-block">
-                <div class="about-don-photo"></div>
+                <div class="about-don-photo">
+                    <img src="don.jpg" alt="Don Stalter">
+                </div>
                 <div class="about-don-bio">
                     <h2 class="about-title">Don Stalter</h2>
                     <p class="about-subtitle">General Partner</p>
@@ -2251,23 +2078,6 @@
         lenis.on('scroll', expandRowsOnScroll);
         expandRowsOnScroll();
 
-        /* About section toggle: Columns / Stacked */
-        const aboutToggle = document.getElementById('aboutToggle');
-        const aboutColumns = document.getElementById('aboutColumns');
-        const aboutStacked = document.getElementById('aboutStacked');
-        aboutToggle.addEventListener('click', (e) => {
-            const btn = e.target.closest('button');
-            if (!btn) return;
-            aboutToggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            if (btn.dataset.view === 'columns') {
-                aboutColumns.classList.remove('hidden');
-                aboutStacked.classList.remove('active');
-            } else {
-                aboutColumns.classList.add('hidden');
-                aboutStacked.classList.add('active');
-            }
-        });
     </script>
 </body>
 </html>
