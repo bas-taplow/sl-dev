@@ -331,6 +331,10 @@
             position: relative;
             z-index: 2;
             background: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: clamp(80px, 8vw, 160px) clamp(40px, 6vw, 120px);
         }
 
@@ -360,6 +364,7 @@
 
         .about-fund-inner {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
         }
 
@@ -370,7 +375,7 @@
             align-items: flex-start;
         }
         .about-fund-text {
-            flex: 1;
+            flex: 3;
         }
         .about-fund-desc {
             font-size: clamp(1rem, 1.15vw, 1.4rem);
@@ -379,8 +384,7 @@
             margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
         }
         .about-fund-backed {
-            flex-shrink: 0;
-            width: clamp(180px, 18vw, 260px);
+            flex: 2;
             padding-top: clamp(4px, 0.4vw, 8px);
         }
         .backed-title {
@@ -406,10 +410,15 @@
             position: relative;
             z-index: 2;
             background: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: clamp(80px, 8vw, 160px) clamp(40px, 6vw, 120px);
         }
         .about-don-inner {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
         }
         .about-don-block {
@@ -438,7 +447,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            filter: url(#duotone-blue);
         }
 
         /* Founders grid */
