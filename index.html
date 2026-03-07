@@ -421,33 +421,6 @@
             transform: translateY(0);
         }
 
-        /* Don photo soft reveal */
-        .about-don-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transform: scale(1.05);
-            opacity: 0.6;
-            transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1),
-                        opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        .about-don-photo.visible img {
-            transform: scale(1);
-            opacity: 1;
-        }
-        /* Don bio fade-up */
-        .about-don-bio {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s,
-                        transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s;
-        }
-        .about-don-bio.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* Team Section */
         .team-section {
             position: relative;
@@ -464,41 +437,8 @@
             width: 100%;
             margin: 0 auto;
         }
-        .team-header {
-            display: flex;
-            align-items: baseline;
-            gap: clamp(16px, 1.5vw, 28px);
-            margin-bottom: clamp(40px, 4vw, 64px);
-        }
 
-        /* View toggle */
-        .team-view { display: none; }
-        .team-view.active { display: block; }
-
-        /* Don view — reuses existing block/photo/bio classes */
-        .about-don-block {
-            display: flex;
-            flex-direction: row;
-            gap: clamp(40px, 5vw, 80px);
-            align-items: flex-start;
-        }
-        .about-don-bio {
-            flex: 1 1 50%;
-        }
-        .about-don-bio .about-title {
-            margin-bottom: clamp(8px, 0.8vw, 14px);
-        }
-        .about-don-bio .about-subtitle {
-            margin-bottom: clamp(24px, 2.5vw, 40px);
-        }
-        .about-don-photo {
-            flex: 1 1 50%;
-            aspect-ratio: 3 / 4;
-            border-radius: clamp(10px, 1vw, 16px);
-            overflow: hidden;
-        }
-
-        /* Team view layout */
+        /* Team layout: sticky text left, members right */
         .team-layout {
             display: flex;
             flex-direction: row;
@@ -522,31 +462,37 @@
             flex: 1 1 60%;
             display: flex;
             flex-direction: column;
-            gap: clamp(24px, 2.5vw, 40px);
+            gap: 0;
         }
 
-        /* Team card */
+        /* Team member — no card bg, blue divider between */
         .team-card {
             display: flex;
             flex-direction: row;
-            gap: clamp(20px, 2vw, 32px);
+            gap: clamp(20px, 2.5vw, 36px);
             align-items: flex-start;
-            padding: clamp(20px, 2vw, 32px);
-            background: #f0f4fb;
-            border-radius: clamp(12px, 1.2vw, 20px);
+            padding: clamp(28px, 3vw, 48px) 0;
+            border-bottom: 1px solid rgba(21, 94, 232, 0.15);
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
                         transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .team-card:first-child {
+            padding-top: 0;
+        }
+        .team-card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
         .team-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
         .team-card-photo {
-            flex: 0 0 clamp(80px, 8vw, 120px);
-            width: clamp(80px, 8vw, 120px);
-            height: clamp(80px, 8vw, 120px);
+            flex: 0 0 clamp(120px, 12vw, 200px);
+            width: clamp(120px, 12vw, 200px);
+            aspect-ratio: 3 / 4;
             border-radius: clamp(8px, 0.8vw, 12px);
             overflow: hidden;
             background: #dde4f0;
@@ -567,6 +513,7 @@
             display: flex;
             flex-direction: column;
             gap: clamp(4px, 0.4vw, 8px);
+            padding-top: clamp(4px, 0.5vw, 8px);
         }
         .team-card-name-row {
             display: flex;
@@ -605,7 +552,7 @@
             font-size: clamp(0.9rem, 1vw, 1.2rem);
             line-height: 1.44;
             color: #155EE8;
-            margin: 0;
+            margin: clamp(4px, 0.5vw, 8px) 0 0 0;
             font-weight: 400;
         }
 
@@ -1019,15 +966,11 @@
             .about-fund-desc { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
             /* Team section */
             .team-section { padding-left: 20px; padding-right: 20px; }
-            .team-header { flex-direction: column; gap: 12px; }
-            .about-don-block { flex-direction: column; }
-            .about-don-photo { width: 100%; flex: unset; }
             .team-layout { flex-direction: column; }
             .team-sticky-text { position: static; flex: unset; margin-bottom: clamp(24px, 4vw, 40px); }
             .team-desc { font-size: clamp(1.1rem, 4vw, 1.5rem); }
             .team-cards { flex: unset; }
-            .team-card { flex-direction: column; gap: clamp(12px, 3vw, 20px); }
-            .team-card-photo { flex: unset; width: 100%; height: auto; aspect-ratio: 1 / 1; max-width: 200px; }
+            .team-card-photo { flex: 0 0 clamp(80px, 25vw, 140px); width: clamp(80px, 25vw, 140px); }
             /* Companies section */
             .founders-grid-section { padding: clamp(30px, 5vw, 60px) 20px; }
             /* Marquee */
@@ -1352,110 +1295,84 @@
         </div>
     </section>
 
-    <!-- Team Section (Don + Team toggle) -->
+    <!-- Team Section -->
     <section class="team-section">
         <div class="team-inner">
-            <!-- Header with toggle -->
-            <div class="team-header">
-                <div class="view-toggle team-toggle">
-                    <button class="active" data-team-view="don">Don Stalter</button>
-                    <button data-team-view="team">The Team</button>
+            <div class="team-layout">
+                <!-- Left: Sticky descriptive text -->
+                <div class="team-sticky-text">
+                    <p class="team-desc">Sunshine Lake Capital is built by a team of operators, investors, and global citizens who believe the best founders are forged by uncommon journeys.</p>
                 </div>
-            </div>
 
-            <!-- DON VIEW (default, visible) -->
-            <div class="team-view team-view-don active" id="teamViewDon">
-                <div class="about-don-block">
-                    <div class="about-don-photo">
-                        <img src="don.jpg" alt="Don Stalter">
-                    </div>
-                    <div class="about-don-bio">
-                        <h2 class="about-title">Don Stalter</h2>
-                        <p class="about-subtitle">General Partner</p>
-                        <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
-                        <p class="about-text">Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TEAM VIEW (hidden initially) -->
-            <div class="team-view team-view-team" id="teamViewTeam">
-                <div class="team-layout">
-                    <!-- Left: Sticky descriptive text -->
-                    <div class="team-sticky-text">
-                        <p class="team-desc">Sunshine Lake Capital is built by a team of operators, investors, and global citizens who believe the best founders are forged by uncommon journeys.</p>
+                <!-- Right: Team members -->
+                <div class="team-cards">
+                    <div class="team-card">
+                        <div class="team-card-photo">
+                            <img src="don.jpg" alt="Don Stalter">
+                        </div>
+                        <div class="team-card-info">
+                            <div class="team-card-name-row">
+                                <span class="team-card-name">Don Stalter</span>
+                                <span class="team-card-badge">US</span>
+                            </div>
+                            <p class="team-card-role">General Partner</p>
+                            <p class="team-card-desc">Over two decades of experience across venture capital, operations, and global strategy.</p>
+                        </div>
                     </div>
 
-                    <!-- Right: Scrollable team cards -->
-                    <div class="team-cards">
-                        <div class="team-card">
-                            <div class="team-card-photo">
-                                <img src="don.jpg" alt="Don Stalter">
-                            </div>
-                            <div class="team-card-info">
-                                <div class="team-card-name-row">
-                                    <span class="team-card-name">Don Stalter</span>
-                                    <span class="team-card-badge">US</span>
-                                </div>
-                                <p class="team-card-role">General Partner</p>
-                                <p class="team-card-desc">Over two decades of experience across venture capital, operations, and global strategy.</p>
-                            </div>
+                    <div class="team-card">
+                        <div class="team-card-photo">
+                            <div class="team-card-photo-placeholder"></div>
                         </div>
-
-                        <div class="team-card">
-                            <div class="team-card-photo">
-                                <div class="team-card-photo-placeholder"></div>
+                        <div class="team-card-info">
+                            <div class="team-card-name-row">
+                                <span class="team-card-name">Suhail Younus</span>
+                                <span class="team-card-badge">US</span>
                             </div>
-                            <div class="team-card-info">
-                                <div class="team-card-name-row">
-                                    <span class="team-card-name">Sarah Chen</span>
-                                    <span class="team-card-badge">SG</span>
-                                </div>
-                                <p class="team-card-role">Partner</p>
-                                <p class="team-card-desc">Former fintech operator with deep expertise in Southeast Asian and European markets.</p>
-                            </div>
+                            <p class="team-card-role">Partner</p>
+                            <p class="team-card-desc">Former fintech operator with deep expertise in Southeast Asian and European markets.</p>
                         </div>
+                    </div>
 
-                        <div class="team-card">
-                            <div class="team-card-photo">
-                                <div class="team-card-photo-placeholder"></div>
-                            </div>
-                            <div class="team-card-info">
-                                <div class="team-card-name-row">
-                                    <span class="team-card-name">Marcus Okafor</span>
-                                    <span class="team-card-badge">NG</span>
-                                </div>
-                                <p class="team-card-role">Principal</p>
-                                <p class="team-card-desc">Background in growth-stage investing across Africa and the Middle East.</p>
-                            </div>
+                    <div class="team-card">
+                        <div class="team-card-photo">
+                            <div class="team-card-photo-placeholder"></div>
                         </div>
-
-                        <div class="team-card">
-                            <div class="team-card-photo">
-                                <div class="team-card-photo-placeholder"></div>
+                        <div class="team-card-info">
+                            <div class="team-card-name-row">
+                                <span class="team-card-name">Ivan La Frinere-Sandoval</span>
+                                <span class="team-card-badge">US</span>
                             </div>
-                            <div class="team-card-info">
-                                <div class="team-card-name-row">
-                                    <span class="team-card-name">Elena Vasquez</span>
-                                    <span class="team-card-badge">CO</span>
-                                </div>
-                                <p class="team-card-role">Head of Platform</p>
-                                <p class="team-card-desc">Connects portfolio founders with global talent, capital, and community resources.</p>
-                            </div>
+                            <p class="team-card-role">Principal</p>
+                            <p class="team-card-desc">Background in growth-stage investing across Africa and the Middle East.</p>
                         </div>
+                    </div>
 
-                        <div class="team-card">
-                            <div class="team-card-photo">
-                                <div class="team-card-photo-placeholder"></div>
+                    <div class="team-card">
+                        <div class="team-card-photo">
+                            <div class="team-card-photo-placeholder"></div>
+                        </div>
+                        <div class="team-card-info">
+                            <div class="team-card-name-row">
+                                <span class="team-card-name">Wieger Lamers</span>
+                                <span class="team-card-badge">NL</span>
                             </div>
-                            <div class="team-card-info">
-                                <div class="team-card-name-row">
-                                    <span class="team-card-name">James Park</span>
-                                    <span class="team-card-badge">KR</span>
-                                </div>
-                                <p class="team-card-role">Venture Partner</p>
-                                <p class="team-card-desc">Serial entrepreneur with three exits spanning enterprise SaaS and developer tools.</p>
+                            <p class="team-card-role">Head of Platform</p>
+                            <p class="team-card-desc">Connects portfolio founders with global talent, capital, and community resources.</p>
+                        </div>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-card-photo">
+                            <div class="team-card-photo-placeholder"></div>
+                        </div>
+                        <div class="team-card-info">
+                            <div class="team-card-name-row">
+                                <span class="team-card-name">Placeholder Name</span>
+                                <span class="team-card-badge">—</span>
                             </div>
+                            <p class="team-card-role">TBD</p>
+                            <p class="team-card-desc">Placeholder team member.</p>
                         </div>
                     </div>
                 </div>
@@ -2219,60 +2136,9 @@
             });
         }, { threshold: 0.15 });
 
-        document.querySelectorAll('.about-fund-inner, .about-don-photo, .about-don-bio').forEach(el => {
+        document.querySelectorAll('.about-fund-inner, .team-card').forEach(el => {
             aboutObserver.observe(el);
         });
-
-        // Team section toggle (Don / Team views)
-        (function() {
-            const teamToggle = document.querySelector('.team-toggle');
-            if (!teamToggle) return;
-
-            const buttons = teamToggle.querySelectorAll('button');
-            const donView = document.getElementById('teamViewDon');
-            const teamView = document.getElementById('teamViewTeam');
-
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const view = btn.dataset.teamView;
-
-                    // Update toggle buttons
-                    buttons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    if (view === 'don') {
-                        donView.classList.add('active');
-                        teamView.classList.remove('active');
-                        // Re-trigger Don animations
-                        const photo = donView.querySelector('.about-don-photo');
-                        const bio = donView.querySelector('.about-don-bio');
-                        if (photo) { photo.classList.remove('visible'); void photo.offsetWidth; photo.classList.add('visible'); }
-                        if (bio) { bio.classList.remove('visible'); void bio.offsetWidth; bio.classList.add('visible'); }
-                    } else {
-                        teamView.classList.add('active');
-                        donView.classList.remove('active');
-                        // Stagger-animate team cards
-                        const cards = teamView.querySelectorAll('.team-card');
-                        cards.forEach((card, i) => {
-                            card.classList.remove('visible');
-                            void card.offsetWidth;
-                            setTimeout(() => card.classList.add('visible'), i * 100);
-                        });
-                        // Fade in sticky text
-                        const stickyText = teamView.querySelector('.team-sticky-text');
-                        if (stickyText) {
-                            stickyText.style.opacity = '0';
-                            stickyText.style.transform = 'translateY(20px)';
-                            stickyText.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                            requestAnimationFrame(() => {
-                                stickyText.style.opacity = '1';
-                                stickyText.style.transform = 'translateY(0)';
-                            });
-                        }
-                    }
-                });
-            });
-        })();
 
     </script>
 </body>
