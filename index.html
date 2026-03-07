@@ -236,7 +236,7 @@
 
         .portfolio-card .card-photo.duotone {
             filter: url(#duotone-blue);
-            transition: filter 0.6s ease;
+            transition: filter 1.4s ease;
         }
         .portfolio-card .card-photo.duotone.in-focus {
             filter: none;
@@ -578,13 +578,16 @@
             z-index: 9999;
             background: #155EE8;
             overflow-y: auto;
+            overscroll-behavior: contain;
             opacity: 0;
+            pointer-events: none;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         .bio-overlay.open {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
         .bio-close {
             position: fixed;
@@ -2348,19 +2351,18 @@
 
                 bioOverlay.classList.add('open');
                 document.body.style.overflow = 'hidden';
+                lenis.stop();
             });
         });
 
-        bioClose.addEventListener('click', () => {
+        function closeBio() {
             bioOverlay.classList.remove('open');
             document.body.style.overflow = '';
-        });
-
+            lenis.start();
+        }
+        bioClose.addEventListener('click', closeBio);
         bioOverlay.addEventListener('click', (e) => {
-            if (e.target === bioOverlay) {
-                bioOverlay.classList.remove('open');
-                document.body.style.overflow = '';
-            }
+            if (e.target === bioOverlay) closeBio();
         });
 
     </script>
