@@ -486,8 +486,33 @@
             font-size: clamp(1rem, 1.15vw, 1.4rem);
             line-height: 1.53;
             color: #155EE8;
-            max-width: 900px;
-            margin: 0 0 clamp(32px, 3vw, 56px) 0;
+            margin: 0 0 clamp(16px, 1.5vw, 28px) 0;
+        }
+
+        /* Fund row: text left, backed-by right */
+        .about-fund-row {
+            display: flex;
+            flex-direction: row;
+            gap: clamp(40px, 5vw, 80px);
+            align-items: flex-start;
+        }
+        .about-fund-text {
+            flex: 1;
+        }
+        .about-fund-backed {
+            flex-shrink: 0;
+            width: clamp(180px, 18vw, 260px);
+            padding-top: clamp(4px, 0.4vw, 8px);
+        }
+        .backed-logos-stacked {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 0.8vw, 14px);
+        }
+        .backed-logos-stacked .backed-text {
+            font-size: clamp(0.85rem, 0.95vw, 1.1rem);
+            color: rgba(21, 94, 232, 0.5);
+            font-weight: 500;
         }
 
         /* Spec cards row */
@@ -965,6 +990,9 @@
             .about-stacked { padding: 0; }
             .about-spec-cards { flex-direction: column; }
             .about-spec-card { min-width: unset; }
+            .about-fund-row { flex-direction: column; }
+            .about-fund-backed { width: 100%; }
+            .backed-logos-stacked { flex-direction: row; flex-wrap: wrap; gap: clamp(12px, 3vw, 20px); }
             .about-don-block { flex-direction: column; }
             .about-don-photo { width: 100%; aspect-ratio: 4 / 3; }
             .about-fund-desc { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
@@ -1427,15 +1455,19 @@
             <!-- The Fund block -->
             <div class="about-fund-block">
                 <h2 class="about-title">The Fund</h2>
-                <p class="about-fund-desc">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
-                <p class="about-fund-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                <div class="backed-section">
-                    <h3 class="backed-title">Backed by:</h3>
-                    <div class="backed-logos">
-                        <span class="backed-text">Accell</span>
-                        <span class="backed-text">Taplow Blue Capital</span>
-                        <span class="backed-text">Fund A</span>
-                        <span class="backed-text">Fund B</span>
+                <div class="about-fund-row">
+                    <div class="about-fund-text">
+                        <p class="about-fund-desc">Sunshine Lake Capital backs exceptional founders at the earliest stages. We invest in people whose lived experiences have forged the resilience, creativity, and global perspective needed to build transformative companies.</p>
+                        <p class="about-fund-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    </div>
+                    <div class="about-fund-backed">
+                        <h3 class="backed-title">Backed by:</h3>
+                        <div class="backed-logos-stacked">
+                            <span class="backed-text">Accell</span>
+                            <span class="backed-text">Taplow Blue Capital</span>
+                            <span class="backed-text">Fund A</span>
+                            <span class="backed-text">Fund B</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1443,13 +1475,13 @@
             <!-- Don Stalter block -->
             <div class="about-don-divider"></div>
             <div class="about-don-block">
+                <div class="about-don-photo"></div>
                 <div class="about-don-bio">
                     <h2 class="about-title">Don Stalter</h2>
                     <p class="about-subtitle">General Partner</p>
                     <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
                     <p class="about-text">Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.</p>
                 </div>
-                <div class="about-don-photo"></div>
             </div>
         </div>
     </section>
