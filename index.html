@@ -589,7 +589,7 @@
             padding: 0;
             border-bottom: 1px solid #155EE8;
             gap: clamp(16px, 2vw, 32px);
-            max-height: clamp(28px, 3vw, 40px);
+            max-height: clamp(24px, 2.7vw, 36px);
             overflow: hidden;
             opacity: 0.4;
             transition: max-height 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
@@ -598,7 +598,7 @@
         }
         .founders-row.expanded {
             max-height: 200px;
-            padding: clamp(24px, 2.5vw, 40px) 0;
+            padding: clamp(20px, 2.2vw, 36px) 0;
             opacity: 1;
         }
         .founders-row:last-child {
@@ -615,11 +615,7 @@
             font-weight: 400;
             line-height: 1.1;
         }
-        .founders-row-category {
-            font-size: clamp(0.75rem, 0.85vw, 0.95rem);
-            color: #155EE8;
-            margin-top: 4px;
-        }
+        .founders-row-category { display: none; }
         .founders-row-region {
             display: flex;
             align-items: center;
