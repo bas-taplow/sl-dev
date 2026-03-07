@@ -236,6 +236,10 @@
 
         .portfolio-card .card-photo.duotone {
             filter: url(#duotone-blue);
+            transition: filter 0.6s ease;
+        }
+        .portfolio-card .card-photo.duotone.in-focus {
+            filter: none;
         }
 
         .portfolio-card .card-header {
@@ -1613,6 +1617,7 @@
         const testimonialsSpacer = document.querySelector('.testimonials-spacer');
         const testimonialsTrack = document.getElementById('testimonialsTrack');
         const testimonialsStickyEl = document.querySelector('.testimonials-sticky');
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
 
         let currentTrackX = 0;
         let targetTrackX = 0;
@@ -1886,6 +1891,16 @@
             mainContent.style.transform = `translateY(-${currentTitleY}px)`;
             testimonialsStickyEl.style.backgroundColor = `rgb(${Math.round(currentBgR)},${Math.round(currentBgG)},${Math.round(currentBgB)})`;
             testimonialsTrack.style.transform = `translateY(-50%) translateX(${currentTrackX}px)`;
+
+            // Duotone → color when card is in focus
+            const winW = window.innerWidth;
+            portfolioCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const inFocus = cardCenter > winW * 0.2 && cardCenter < winW * 0.8;
+                const photo = card.querySelector('.card-photo.duotone');
+                if (photo) photo.classList.toggle('in-focus', inFocus);
+            });
             footerCard.style.transform = `scale(${currentFooterScale})`;
             footerCard.style.borderRadius = currentFooterRadius + 'px';
 
