@@ -548,6 +548,145 @@
             font-weight: 400;
         }
 
+        /* Bio button on team cards */
+        .team-bio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: clamp(8px, 1vw, 16px);
+            padding: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: clamp(0.75rem, 0.85vw, 0.95rem);
+            color: #155EE8;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 500;
+            opacity: 0.5;
+            transition: opacity 0.2s ease;
+        }
+        .team-bio-btn:hover {
+            opacity: 1;
+        }
+
+        /* Bio overlay */
+        .bio-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #155EE8;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .bio-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .bio-close {
+            position: fixed;
+            top: clamp(20px, 3vw, 40px);
+            right: clamp(20px, 3vw, 40px);
+            z-index: 10000;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+            padding: 8px;
+        }
+        .bio-close:hover { opacity: 1; }
+        .bio-overlay-inner {
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(60px, 6vw, 100px) clamp(40px, 6vw, 120px);
+            gap: clamp(40px, 5vw, 80px);
+        }
+        .bio-overlay-photo {
+            flex: 0 0 45%;
+            position: sticky;
+            top: clamp(60px, 6vw, 100px);
+            align-self: flex-start;
+            aspect-ratio: 3 / 4;
+            border-radius: clamp(10px, 1vw, 16px);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .bio-overlay-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .bio-overlay-content {
+            flex: 1;
+            padding-top: clamp(8px, 1vw, 16px);
+        }
+        .bio-overlay-content h2 {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(2.2rem, 3vw, 4rem);
+            font-weight: 400;
+            color: #fff;
+            margin: 0 0 clamp(4px, 0.5vw, 8px) 0;
+            line-height: 1.1;
+        }
+        .bio-overlay-content .bio-role {
+            font-size: clamp(0.8rem, 0.9vw, 1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0 0 clamp(24px, 2.5vw, 40px) 0;
+        }
+        .bio-overlay-content p {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1rem, 1.2vw, 1.5rem);
+            line-height: 1.53;
+            color: #fff;
+            margin: 0 0 clamp(16px, 1.5vw, 24px) 0;
+            font-weight: 400;
+        }
+        .bio-overlay-content h3 {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(1.2rem, 1.4vw, 1.8rem);
+            font-weight: 400;
+            color: #fff;
+            margin: clamp(32px, 3vw, 48px) 0 clamp(16px, 1.5vw, 24px) 0;
+        }
+        .bio-overlay-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .bio-overlay-content ul li {
+            font-family: 'DomaineDisp', 'Times New Roman', Times, serif;
+            font-size: clamp(0.95rem, 1.1vw, 1.3rem);
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            padding: clamp(10px, 1vw, 16px) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .bio-overlay-content ul li:last-child { border-bottom: none; }
+
+        @media (max-width: 768px) {
+            .bio-overlay-inner {
+                flex-direction: column;
+                padding: 80px 20px 40px;
+            }
+            .bio-overlay-photo {
+                position: static;
+                flex: unset;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
         /* Founders grid */
         .founders-grid-section {
             position: relative;
@@ -1308,6 +1447,7 @@
                             </div>
                             <p class="team-card-role">General Partner</p>
                             <p class="team-card-desc">Over two decades of experience across venture capital, operations, and global strategy.</p>
+                            <button class="team-bio-btn" data-bio="don">Full Background <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 8h8M8 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                         </div>
                     </div>
 
@@ -1321,6 +1461,7 @@
                             </div>
                             <p class="team-card-role">Partner</p>
                             <p class="team-card-desc">Former fintech operator with deep expertise in Southeast Asian and European markets.</p>
+                            <button class="team-bio-btn" data-bio="suhail">Full Background <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 8h8M8 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                         </div>
                     </div>
 
@@ -1368,6 +1509,15 @@
     </section>
 
     </main>
+
+    <!-- Bio overlay -->
+    <div class="bio-overlay" id="bioOverlay">
+        <button class="bio-close" id="bioClose"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <div class="bio-overlay-inner">
+            <div class="bio-overlay-photo" id="bioPhoto"></div>
+            <div class="bio-overlay-content" id="bioContent"></div>
+        </div>
+    </div>
 
     <!-- Footer with WebGL lake background -->
     <footer class="footer-scroll-spacer">
@@ -2136,6 +2286,81 @@
 
         document.querySelectorAll('.about-fund-inner, .team-card').forEach(el => {
             aboutObserver.observe(el);
+        });
+
+        // Bio overlay
+        const bioData = {
+            don: {
+                photo: 'don.jpg',
+                name: 'Don Stalter',
+                role: 'General Partner',
+                bio: [
+                    'Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.',
+                    'Before launching Sunshine Lake, Don held senior roles at leading financial institutions and technology companies, where he built cross-border teams and led investments spanning multiple continents. His global network and hands-on approach make him a trusted partner from first check to growth stage and beyond.'
+                ],
+                accomplishments: [
+                    'Founded Sunshine Lake Capital',
+                    '20+ years in venture capital and strategy',
+                    'Led cross-border investments across multiple continents',
+                    'Former senior roles at leading financial institutions',
+                    'Built and scaled global investment teams'
+                ]
+            },
+            suhail: {
+                photo: '',
+                name: 'Suhail Younus',
+                role: 'Partner',
+                bio: [
+                    'Suhail Younus brings deep operational expertise in fintech and emerging markets to Sunshine Lake Capital. His career spans building and scaling financial technology companies across Southeast Asia and Europe.',
+                    'Before joining Sunshine Lake, Suhail held leadership positions at high-growth fintech startups where he drove product strategy and international expansion. His firsthand experience as an operator gives him a unique perspective on what founders need to succeed.'
+                ],
+                accomplishments: [
+                    'Deep expertise in Southeast Asian and European markets',
+                    'Former fintech operator and product leader',
+                    'Led international expansion for high-growth startups',
+                    'Track record in financial technology investing',
+                    'Cross-border market strategy specialist'
+                ]
+            }
+        };
+
+        const bioOverlay = document.getElementById('bioOverlay');
+        const bioClose = document.getElementById('bioClose');
+        const bioPhoto = document.getElementById('bioPhoto');
+        const bioContent = document.getElementById('bioContent');
+
+        document.querySelectorAll('.team-bio-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.bio;
+                const data = bioData[key];
+                if (!data) return;
+
+                bioPhoto.innerHTML = data.photo
+                    ? `<img src="${data.photo}" alt="${data.name}">`
+                    : '<div class="team-card-photo-placeholder" style="width:100%;height:100%"></div>';
+
+                let html = `<h2>${data.name}</h2><p class="bio-role">${data.role}</p>`;
+                data.bio.forEach(p => html += `<p>${p}</p>`);
+                html += '<h3>Key Accomplishments</h3><ul>';
+                data.accomplishments.forEach(a => html += `<li>${a}</li>`);
+                html += '</ul>';
+                bioContent.innerHTML = html;
+
+                bioOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        bioClose.addEventListener('click', () => {
+            bioOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+
+        bioOverlay.addEventListener('click', (e) => {
+            if (e.target === bioOverlay) {
+                bioOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
         });
 
     </script>
