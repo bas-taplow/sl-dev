@@ -435,6 +435,15 @@
             font-weight: 500;
         }
 
+        /* Don photo placeholder in columns view */
+        .about-don-photo-col {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: linear-gradient(135deg, rgba(21, 94, 232, 0.08) 0%, rgba(21, 94, 232, 0.15) 100%);
+            border-radius: clamp(10px, 1vw, 16px);
+            margin-bottom: clamp(24px, 2.5vw, 40px);
+        }
+
         /* About section header with toggle */
         .about-header {
             display: flex;
@@ -1405,6 +1414,7 @@
             </div>
             <div class="about-divider"></div>
             <div class="about-col">
+                <div class="about-don-photo-col"></div>
                 <h2 class="about-title">Don Stalter</h2>
                 <p class="about-subtitle">General Partner</p>
                 <p class="about-text">Don Stalter founded Sunshine Lake Capital with the conviction that the most overlooked founders often build the most enduring companies. With over two decades of experience across venture capital, operations, and strategy, Don has developed a sharp eye for identifying founders whose unconventional paths give them a distinct edge.</p>
